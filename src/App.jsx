@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 // ============================================================================
-// 1. CORE CONFIGURATION & DATABASE
+// 1. CORE CONFIGURATION & DATABASE (YOUR EXACT KEYS)
 // ============================================================================
 const supabaseUrl = "https://udljxsjkqdrpqmxamwkd.supabase.co";
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkbGp4c2prcWRycHFteGFtd2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0Mzg1NDAsImV4cCI6MjA4ODAxNDU0MH0.gXuw6cNBRr8HCAOOsB3Z3xYuUDeIvDlXXIcvhuTKe_c";
@@ -20,7 +20,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const USER_CONFIG = { 
   name: "Ketankumar Parmar", 
   email: "director@hospitalprojectconsultancy.com", 
-  reportEmail: "notifications@hospitalprojectconsultancy.com" 
+  reportEmail: "reports@hospitalprojectconsultancy.com" 
 };
 const RESEND_API_KEY = "re_cjZ21RBy_8chZH1vKAPCgJEJrNk5kpvKR";
 
@@ -71,12 +71,6 @@ const DPR_STRUCTURE = [
   "13. SWOT & Risk Analysis", "14. Subsidies & Government Incentives"
 ];
 
-const BANK_TYPES = [
-  { cat: "Public Sector Banks", desc: "Comfortable funding hospitals (Priority Sector).", list: "SBI, Bank of Baroda, PNB, Canara Bank" },
-  { cat: "Private Banks", desc: "Usually finance Equipment, Expansion, & Working Capital.", list: "HDFC Bank, ICICI Bank, Axis Bank" },
-  { cat: "NBFC & Dev. Institutions", desc: "Used for co-lending or structured finance.", list: "SIDBI, Tata Capital, Aditya Birla" }
-];
-
 // ============================================================================
 // 3. UTILITY FUNCTIONS
 // ============================================================================
@@ -125,6 +119,29 @@ export default function App() {
   const [pricingState, setPricingState] = useState({ packageId: "free", promoCode: "", discountApplied: false });
   const [archInputs, setArchInputs] = useState({ landArea: "45000", floors: "4", specialties: "OPD, Trauma, Burn Unit, ICU, 3 OTs, Radiology", parking: "Basement + Surface" });
   const [activeBoqCategory, setActiveBoqCategory] = useState("all");
+
+  // --- NEW: DYNAMIC LOADING MESSAGES ---
+  const loadingMessages = [
+    "Waking up AI Engine...",
+    "Analyzing NABH Protocols...",
+    "Calculating CAPEX...",
+    "Drafting Expert DPR...",
+    "Generating Secure PDF...",
+    "Connecting to Mail Server...",
+    "Finalizing..."
+  ];
+  const [loadingIndex, setLoadingIndex] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (isSyncing) {
+      setLoadingIndex(0);
+      interval = setInterval(() => {
+        setLoadingIndex((prev) => (prev < loadingMessages.length - 1 ? prev + 1 : prev));
+      }, 4000); // Changes text every 4 seconds
+    }
+    return () => clearInterval(interval);
+  }, [isSyncing, loadingMessages.length]);
 
   useEffect(() => {
     const hash = window.location.hash.replace('#/', '').toLowerCase();
@@ -270,7 +287,6 @@ export default function App() {
     setIsSyncing(true);
     
     try {
-      // THIS NOW POINTS TO YOUR SECURE CLOUD BACKEND
       const apiUrl = "https://innovate-india-suite.onrender.com/api/admin/generate-pdf"; 
       
       const response = await fetch(apiUrl, {
@@ -860,8 +876,15 @@ export default function App() {
                         <span className="text-3xl md:text-5xl font-black">{formatPrice(finalPrice)}</span>
                       </div>
                     </div>
-                    <button onClick={handleDPRCheckout} disabled={isSyncing} className="w-full bg-[#0A2540] text-[#D4AF37] py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase tracking-widest flex justify-center items-center gap-2 text-sm md:text-base hover:scale-[1.02] transition-transform">
-                      {isSyncing ? <Activity className="w-5 h-5 animate-spin"/> : (pricingState.packageId === "free" ? "Claim Free Brief" : "Secure Checkout")}
+                    <button onClick={handleDPRCheckout} disabled={isSyncing} className="w-full bg-[#0A2540] text-[#D4AF37] py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase tracking-widest flex justify-center items-center gap-3 text-sm md:text-base hover:scale-[1.02] transition-transform overflow-hidden relative">
+                      {isSyncing ? (
+                        <>
+                          <Activity className="w-5 h-5 animate-spin shrink-0"/>
+                          <span className="animate-pulse whitespace-nowrap">{loadingMessages[loadingIndex]}</span>
+                        </>
+                      ) : (
+                        pricingState.packageId === "free" ? "Claim Free Brief" : "Secure Checkout"
+                      )}
                     </button>
                   </div>
                 </div>
