@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // STRICTLY FILTERED IMPORTS
 import {
@@ -753,6 +754,7 @@ export default function App() {
           </footer>
         </main>
       </div>
+      <SpeedInsights />
     </div>
   );
 }
