@@ -7,7 +7,8 @@ import {
   BarChart3, MapPin, Menu, X, TrendingUp, PieChart, Users, Layers, Cpu, Download,
   CheckCircle2, AlertCircle, FileWarning, Briefcase, ArrowRight, Clock, ClipboardList,
   Wallet, User, Phone, Mail, Globe, Activity, ShieldCheck, CreditCard, Zap, Star, Check, 
-  PlusCircle, Brain, FileSearch, ShieldAlert, Target, Map, Box, Save, Timer, BellRing, TrendingDown, Cloud
+  PlusCircle, Brain, FileSearch, ShieldAlert, Target, Map, Box, Save, Timer, BellRing, 
+  TrendingDown, Cloud, Database, Settings // <--- ADDED THESE TWO HERE
 } from "lucide-react";
 
 // ============================================================================
@@ -607,9 +608,11 @@ const runAIAnalysis = async () => {
                 
               </div>
             )}
-{/* TAB 2: AI ARCHITECT (MATCHING SCREENSHOT) */}
+{/* TAB 2: AI ARCHITECT */}
             {activeTab === "architect" && (
-              <div className="space-y-8 animate-in fade-in duration-500">
+              <div className="space-y-12 animate-in fade-in duration-500">
+                
+                {/* --- TOP SECTION: AI PLANNING ENGINE FORM --- */}
                 <div className="bg-[#0A2540]/40 border border-[#D4AF37]/20 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
                   <div className="flex items-center gap-4 mb-2">
                     <Cpu className="w-8 h-8 text-[#D4AF37]" />
@@ -625,7 +628,7 @@ const runAIAnalysis = async () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
                         <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Land Area (Sq.Ft)</label>
-                        <input type="text" value={archInputs.landArea} onChange={e=>setArchInputs({...archInputs, landArea: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50" />
+                        <input type="text" value={archInputs.landArea} onChange={e=>setArchInputs({...archInputs, landArea: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50 transition-colors" />
                       </div>
                       <div>
                         <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Bed Capacity</label>
@@ -633,11 +636,11 @@ const runAIAnalysis = async () => {
                       </div>
                       <div>
                         <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Number of Floors</label>
-                        <input type="text" value={archInputs.floors} onChange={e=>setArchInputs({...archInputs, floors: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50" />
+                        <input type="text" value={archInputs.floors} onChange={e=>setArchInputs({...archInputs, floors: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50 transition-colors" />
                       </div>
                       <div>
                         <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">City & Local By-Laws</label>
-                        <select className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50">
+                        <select className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50 transition-colors">
                           <option>Surat (GDCR Rules)</option>
                           <option>Ahmedabad (AMC By-laws)</option>
                           <option>Mumbai (BMC Guidelines)</option>
@@ -647,51 +650,120 @@ const runAIAnalysis = async () => {
                     
                     <div className="mb-6">
                       <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Required Specialties & Departments</label>
-                      <input type="text" value={archInputs.specialties} onChange={e=>setArchInputs({...archInputs, specialties: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50" />
+                      <input type="text" value={archInputs.specialties} onChange={e=>setArchInputs({...archInputs, specialties: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50 transition-colors" />
                     </div>
                     
                     <div className="mb-8">
                       <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Parking Requirements</label>
-                      <select value={archInputs.parking} onChange={e=>setArchInputs({...archInputs, parking: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50">
+                      <select value={archInputs.parking} onChange={e=>setArchInputs({...archInputs, parking: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50 transition-colors">
                         <option>Basement + Surface Parking (Standard)</option>
                         <option>Multi-level Car Parking (MLCP)</option>
                       </select>
                     </div>
 
-                    <button className="w-full py-4 bg-[#D4AF37] text-[#051626] rounded-xl font-black uppercase tracking-widest flex justify-center items-center gap-3 hover:scale-[1.01] transition-transform">
+                    <button className="w-full py-4 bg-[#D4AF37] text-[#051626] rounded-xl font-black uppercase tracking-widest flex justify-center items-center gap-3 hover:scale-[1.02] shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-transform">
                       <Cpu size={18}/> Run AI Optimization & Download 2D Plan
                     </button>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px]">
-                    <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-sm mb-6">Engine Logic Rules</h4>
-                    <div className="space-y-4">
-                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">OPD near entrance</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Easy access for outpatients, reduces congestion.</p></div>
-                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">ER accessible from road</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Quick ambulance entry, bypasses public areas.</p></div>
-                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">ICU adjacent to OT</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Immediate transfer of critical post-op patients.</p></div>
-                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">Wards in quiet zones</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Ensures rest, minimizes noise & infection risk.</p></div>
-                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">Service corridors separate</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Prevents overlap of patient, staff & waste flows.</p></div>
-                    </div>
+                {/* --- BOTTOM SECTION: UPGRADED VERIFIED AI OUTPUTS --- */}
+                <div className="space-y-6">
+                  
+                  {/* Header */}
+                  <div className="mb-8 border-b border-white/10 pb-6">
+                    <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">Verified <span className="text-[#D4AF37]">AI Outputs</span></h3>
+                    <p className="text-white/60 text-sm">AI-generated deliverables aligned with NABH standards, ready for execution and approvals.</p>
                   </div>
-                  <div className="space-y-6">
-                    <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px]">
-                      <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-sm mb-6">Verified AI Outputs</h4>
-                      <div className="space-y-4">
-                        <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex items-center gap-3"><Layers className="text-[#D4AF37] w-5 h-5"/><span className="text-white font-bold text-sm">Zoning Diagrams (Public, Clinical)</span></div>
-                        <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex items-center gap-3"><Grid className="text-[#D4AF37] w-5 h-5"/><span className="text-white font-bold text-sm">Department & Room Layouts</span></div>
-                        <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex items-center gap-3"><FileText className="text-[#D4AF37] w-5 h-5"/><span className="text-white font-bold text-sm">Space Reports & DPR Data</span></div>
+
+                  {/* 3-Column Card Layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    {/* 🟦 Card A: Zoning Diagrams (Blue) */}
+                    <div className="bg-[#051626] border border-blue-500/20 p-6 rounded-2xl hover:border-blue-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(59,130,246,0.05)] hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] flex flex-col">
+                      <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><Layers className="text-blue-400 w-6 h-6"/></div>
+                      <h4 className="text-base font-black text-white uppercase tracking-widest mb-2 group-hover:text-blue-400 transition-colors">Zoning Diagrams</h4>
+                      <p className="text-xs text-white/50 mb-6 leading-relaxed flex-1">Separating public, semi-restricted, and clinical areas for optimal flow.</p>
+                      <ul className="space-y-3 mb-8 border-t border-white/5 pt-5">
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div> Public vs Clinical</li>
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div> Patient Flow Map</li>
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div> ER Access Points</li>
+                      </ul>
+                      <div className="flex flex-col gap-3 mt-auto">
+                        <button className="w-full py-3 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition">Preview Zones</button>
+                        <button className="w-full py-3 bg-transparent text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition flex items-center justify-center gap-2"><Download size={14}/> Export PDF</button>
                       </div>
                     </div>
-                    <div className="bg-amber-500/10 border border-amber-500/30 p-6 md:p-8 rounded-2xl md:rounded-[30px] flex gap-4">
-                      <CheckCircle2 className="w-8 h-8 text-amber-500 shrink-0" />
-                      <div>
-                        <h4 className="text-amber-500 font-black uppercase tracking-widest text-sm mb-2">100% NABH Compliant</h4>
-                        <p className="text-white/70 text-xs leading-relaxed">The AI encodes statutory regulations into every decision, ensuring the generated floor plans pass medical board inspections.</p>
+
+                    {/* 🟩 Card B: Department Layouts (Green) */}
+                    <div className="bg-[#051626] border border-emerald-500/20 p-6 rounded-2xl hover:border-emerald-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:shadow-[0_0_25px_rgba(16,185,129,0.15)] flex flex-col">
+                      <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><Grid className="text-emerald-400 w-6 h-6"/></div>
+                      <h4 className="text-base font-black text-white uppercase tracking-widest mb-2 group-hover:text-emerald-400 transition-colors">Room Layouts</h4>
+                      <p className="text-xs text-white/50 mb-6 leading-relaxed flex-1">Detailed layouts with optimized room sizes and adjacency logic.</p>
+                      <ul className="space-y-3 mb-8 border-t border-white/5 pt-5">
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> OPD, ICU, OT Plans</li>
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Area Allocations</li>
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Equip. Ready Blocks</li>
+                      </ul>
+                      <div className="flex flex-col gap-3 mt-auto">
+                        <button className="w-full py-3 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition">Explore Plans</button>
+                        <button className="w-full py-3 bg-transparent text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition flex items-center justify-center gap-2"><Download size={14}/> Get CAD / PDF</button>
+                      </div>
+                    </div>
+
+                    {/* 🟨 Card C: Space Reports & DPR (Yellow) */}
+                    <div className="bg-[#051626] border border-[#D4AF37]/20 p-6 rounded-2xl hover:border-[#D4AF37]/60 transition-all duration-300 group shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] flex flex-col">
+                      <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><FileText className="text-[#D4AF37] w-6 h-6"/></div>
+                      <h4 className="text-base font-black text-white uppercase tracking-widest mb-2 group-hover:text-[#D4AF37] transition-colors">DPR Space Data</h4>
+                      <p className="text-xs text-white/50 mb-6 leading-relaxed flex-1">Comprehensive data tables for budgeting and bank approvals.</p>
+                      <ul className="space-y-3 mb-8 border-t border-white/5 pt-5">
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div> Dept. Area Statements</li>
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div> Built-up Totals</li>
+                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div> Costing Inputs</li>
+                      </ul>
+                      <div className="flex flex-col gap-3 mt-auto">
+                        <button className="w-full py-3 bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-[#D4AF37] hover:text-[#051626] transition">View Data</button>
+                        <button className="w-full py-3 bg-transparent text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition flex items-center justify-center gap-2"><Download size={14}/> Export Report</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Trust & Compliance Highlight (NABH Badge) */}
+                  <div className="bg-gradient-to-r from-amber-500/20 to-[#0A2540] border border-amber-500/40 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-xl relative overflow-hidden mt-8">
+                    <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center shrink-0 border border-amber-500/30">
+                      <ShieldCheck className="w-8 h-8 text-amber-400" />
+                    </div>
+                    <div className="flex-1 text-center md:text-left">
+                      <h4 className="text-xl font-black text-amber-400 uppercase tracking-widest mb-2">100% NABH Compliant</h4>
+                      <p className="text-white/80 text-sm leading-relaxed mb-4">All outputs are generated using embedded 6th Edition guidelines and validated planning logic to ensure instant medical board approval readiness.</p>
+                      <div className="flex flex-wrap justify-center md:justify-start gap-3">
+                        <span className="bg-black/30 border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-400 flex items-center gap-1.5"><CheckCircle2 size={12}/> Auto Rule Validation</span>
+                        <span className="bg-black/30 border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-400 flex items-center gap-1.5"><CheckCircle2 size={12}/> Medical Board Ready</span>
+                        <span className="bg-black/30 border border-white/10 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-emerald-400 flex items-center gap-1.5"><CheckCircle2 size={12}/> Error-Free Logic</span>
                       </div>
                     </div>
                   </div>
+
+                  {/* Smart Features Strip */}
+                  <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 py-8 border-y border-white/5 my-8">
+                    <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Zap size={16} className="text-[#D4AF37]"/> Instant Generation</span>
+                    <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Activity size={16} className="text-[#D4AF37]"/> Real-Time Updates</span>
+                    <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Layers size={16} className="text-[#D4AF37]"/> Data-Backed Logic</span>
+                    <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Settings size={16} className="text-[#D4AF37]"/> Specialty Customization</span>
+                  </div>
+
+                  {/* Final CTA Section */}
+                  <div className="bg-[#010810] border border-white/10 p-8 md:p-12 rounded-3xl text-center shadow-2xl relative overflow-hidden">
+                     <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-emerald-500 to-[#D4AF37]"></div>
+                     <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-8 mt-2">Ready to Download Your Hospital Plan?</h3>
+                     <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                       <button className="w-full sm:w-auto px-8 py-4 bg-[#D4AF37] text-black rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_0_20px_rgba(212,175,55,0.4)] flex items-center justify-center gap-2"><Cpu size={16}/> Run AI Optimization</button>
+                       <button onClick={() => setActiveTab('dpr')} className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/20 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white/10 transition-colors flex items-center justify-center gap-2"><Download size={16}/> Download Full DPR</button>
+                       <button onClick={() => setActiveTab('contact')} className="w-full sm:w-auto px-8 py-4 bg-transparent text-[#D4AF37] hover:underline font-black text-xs uppercase tracking-widest transition-colors">Consult Expert</button>
+                     </div>
+                  </div>
+
                 </div>
               </div>
             )}
