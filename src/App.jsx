@@ -371,10 +371,11 @@ const runAIAnalysis = async () => {
 
       {/* SIDEBAR */}
       <aside className={`fixed inset-y-0 left-0 z-40 transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0 transition duration-300 w-72 bg-[#051626] border-r border-white/5 flex flex-col shrink-0 mt-6 md:mt-0 pt-2 md:pt-0 shadow-2xl`}>
-        <div className="p-6 border-b border-white/5 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#F1CF6D] flex items-center justify-center text-[#0A2540] shadow-[0_0_15px_rgba(212,175,55,0.4)] shrink-0"><Building2 /></div>
+       {/* CLICKABLE LOGO LINKING TO MAIN SITE */}
+        <a href="https://hospitalprojectconsultancy.com/index.html" className="p-6 border-b border-white/5 flex items-center gap-3 hover:bg-white/5 transition-colors cursor-pointer group decoration-transparent">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#F1CF6D] flex items-center justify-center text-[#0A2540] shadow-[0_0_15px_rgba(212,175,55,0.4)] shrink-0 group-hover:scale-105 transition-transform"><Building2 /></div>
           <div className="flex flex-col"><span className="text-xl font-black tracking-widest uppercase text-white">INNOVATE <span className="text-[#FBC02D]">INDAI</span></span><span className="text-[7px] text-gray-400 uppercase tracking-[0.2em] mt-1 font-semibold">Hospital Project OS</span></div>
-        </div>
+        </a>
         <div className="p-6 border-b border-white/5 bg-[#0A2540]/30 flex justify-between items-center">
           <div><p className="text-xs text-white/40 uppercase tracking-widest font-black mb-1">Authenticated</p><p className="text-sm font-black text-white truncate">{USER_CONFIG.email}</p><p className="text-[10px] text-emerald-400 uppercase font-black tracking-widest mt-2">{USER_CONFIG.role}</p></div>
           <Cloud className="w-6 h-6 text-emerald-400" />
@@ -396,8 +397,17 @@ const runAIAnalysis = async () => {
         
         <header className="h-20 flex items-center justify-between md:justify-end px-6 md:px-10 border-b border-white/5 bg-[#010810]/50 backdrop-blur-md z-30 shrink-0">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-white"><Menu className="w-8 h-8" /></button>
-          <div className="flex gap-6 md:gap-8 items-center text-xs font-bold tracking-widest uppercase">
-             <button onClick={() => setActiveTab('dpr')} className="px-6 py-2.5 bg-[#D4AF37] text-[#0A2540] rounded-full hover:bg-white transition-all shadow-[0_0_15px_rgba(212,175,55,0.3)] flex items-center gap-2"><Download size={14}/> Secure DPR</button>
+          
+          <div className="flex gap-4 md:gap-8 items-center text-xs font-bold tracking-widest uppercase">
+             
+             {/* 🔥 NEW: ESCAPE HATCH TO MAIN SITE */}
+             <a href="https://hospitalprojectconsultancy.com/index.html" className="hidden md:flex items-center gap-2 text-white/50 hover:text-white transition-colors">
+               <Globe size={14} /> Main Website
+             </a>
+             
+             <button onClick={() => setActiveTab('dpr')} className="px-6 py-2.5 bg-[#D4AF37] text-[#0A2540] rounded-full hover:bg-white transition-all shadow-[0_0_15px_rgba(212,175,55,0.3)] flex items-center gap-2">
+               <Download size={14}/> Secure DPR
+             </button>
           </div>
         </header>
 
