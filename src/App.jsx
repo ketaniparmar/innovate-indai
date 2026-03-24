@@ -568,6 +568,354 @@ const runAIAnalysis = async () => {
                 
               </div>
             )}
+{/* TAB 2: AI ARCHITECT (MATCHING SCREENSHOT) */}
+            {activeTab === "architect" && (
+              <div className="space-y-8 animate-in fade-in duration-500">
+                <div className="bg-[#0A2540]/40 border border-[#D4AF37]/20 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
+                  <div className="flex items-center gap-4 mb-2">
+                    <Cpu className="w-8 h-8 text-[#D4AF37]" />
+                    <h3 className="text-2xl font-black text-white tracking-tighter">AI Planning Engine</h3>
+                  </div>
+                  <p className="text-white/60 text-sm mb-8">A concept-to-DPR accelerator. Reduce months of planning to hours by embedding NABH rules directly into the AI design logic.</p>
+                  
+                  <div className="bg-[#051626] border border-white/5 rounded-2xl p-6 md:p-8">
+                    <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-sm flex items-center gap-2 mb-6">
+                      <Zap size={16}/> Step 1: Define Project Parameters
+                    </h4>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                      <div>
+                        <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Land Area (Sq.Ft)</label>
+                        <input type="text" value={archInputs.landArea} onChange={e=>setArchInputs({...archInputs, landArea: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50" />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Bed Capacity</label>
+                        <input type="text" value={config.beds} disabled className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white/50 font-bold outline-none cursor-not-allowed" />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Number of Floors</label>
+                        <input type="text" value={archInputs.floors} onChange={e=>setArchInputs({...archInputs, floors: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50" />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">City & Local By-Laws</label>
+                        <select className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50">
+                          <option>Surat (GDCR Rules)</option>
+                          <option>Ahmedabad (AMC By-laws)</option>
+                          <option>Mumbai (BMC Guidelines)</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-6">
+                      <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Required Specialties & Departments</label>
+                      <input type="text" value={archInputs.specialties} onChange={e=>setArchInputs({...archInputs, specialties: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50" />
+                    </div>
+                    
+                    <div className="mb-8">
+                      <label className="block text-[10px] text-white/50 font-black uppercase tracking-widest mb-2">Parking Requirements</label>
+                      <select value={archInputs.parking} onChange={e=>setArchInputs({...archInputs, parking: e.target.value})} className="w-full bg-[#010810] border border-white/10 p-4 rounded-xl text-white font-bold outline-none focus:border-[#D4AF37]/50">
+                        <option>Basement + Surface Parking (Standard)</option>
+                        <option>Multi-level Car Parking (MLCP)</option>
+                      </select>
+                    </div>
+
+                    <button className="w-full py-4 bg-[#D4AF37] text-[#051626] rounded-xl font-black uppercase tracking-widest flex justify-center items-center gap-3 hover:scale-[1.01] transition-transform">
+                      <Cpu size={18}/> Run AI Optimization & Download 2D Plan
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px]">
+                    <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-sm mb-6">Engine Logic Rules</h4>
+                    <div className="space-y-4">
+                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">OPD near entrance</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Easy access for outpatients, reduces congestion.</p></div>
+                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">ER accessible from road</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Quick ambulance entry, bypasses public areas.</p></div>
+                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">ICU adjacent to OT</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Immediate transfer of critical post-op patients.</p></div>
+                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">Wards in quiet zones</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Ensures rest, minimizes noise & infection risk.</p></div>
+                      <div className="bg-[#010810] border border-white/5 p-4 rounded-xl"><p className="text-emerald-400 font-bold text-sm mb-1">Service corridors separate</p><p className="text-white/50 text-[10px] uppercase tracking-widest">Prevents overlap of patient, staff & waste flows.</p></div>
+                    </div>
+                  </div>
+                  <div className="space-y-6">
+                    <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px]">
+                      <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-sm mb-6">Verified AI Outputs</h4>
+                      <div className="space-y-4">
+                        <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex items-center gap-3"><Layers className="text-[#D4AF37] w-5 h-5"/><span className="text-white font-bold text-sm">Zoning Diagrams (Public, Clinical)</span></div>
+                        <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex items-center gap-3"><Grid className="text-[#D4AF37] w-5 h-5"/><span className="text-white font-bold text-sm">Department & Room Layouts</span></div>
+                        <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex items-center gap-3"><FileText className="text-[#D4AF37] w-5 h-5"/><span className="text-white font-bold text-sm">Space Reports & DPR Data</span></div>
+                      </div>
+                    </div>
+                    <div className="bg-amber-500/10 border border-amber-500/30 p-6 md:p-8 rounded-2xl md:rounded-[30px] flex gap-4">
+                      <CheckCircle2 className="w-8 h-8 text-amber-500 shrink-0" />
+                      <div>
+                        <h4 className="text-amber-500 font-black uppercase tracking-widest text-sm mb-2">100% NABH Compliant</h4>
+                        <p className="text-white/70 text-xs leading-relaxed">The AI encodes statutory regulations into every decision, ensuring the generated floor plans pass medical board inspections.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: SMART BOQ (MATCHING SCREENSHOT) */}
+            {activeTab === "boq" && (
+              <div className="space-y-8 animate-in fade-in duration-500">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-[#0A2540]/60 border border-white/5 p-6 rounded-2xl md:rounded-[30px] flex flex-col justify-center shadow-xl">
+                    <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-2">Total BOQ Value</p>
+                    <p className="text-4xl md:text-5xl font-black text-[#D4AF37]">{formatINR(boqData.grandTotal)}</p>
+                  </div>
+                  <div className="bg-[#0A2540]/60 border border-white/5 p-6 rounded-2xl md:rounded-[30px] flex flex-col justify-center shadow-xl">
+                    <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-2">Cost per Sq.ft</p>
+                    <p className="text-4xl md:text-5xl font-black text-white">₹{Math.round(boqData.grandTotal / engine.area).toLocaleString()}</p>
+                  </div>
+                  <div className="bg-[#0A2540]/60 border border-white/5 p-6 rounded-2xl md:rounded-[30px] flex flex-col justify-center shadow-xl">
+                    <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-4">Export Detailed BOQ</p>
+                    <div className="flex gap-4">
+                      <button className="flex-1 py-3 bg-emerald-500/10 border border-emerald-500 text-emerald-400 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-emerald-500/20"><Download size={14}/> Excel</button>
+                      <button className="flex-1 py-3 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#D4AF37]/20"><Download size={14}/> PDF</button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                  <button className="px-6 py-2 bg-[#D4AF37] text-[#051626] rounded-full font-black text-[10px] uppercase tracking-widest shrink-0">All Categories</button>
+                  {boqData.categories.map((c,i) => (
+                    <button key={i} className="px-6 py-2 bg-[#0A2540] border border-white/5 text-white/50 rounded-full font-bold text-[10px] uppercase tracking-widest hover:text-white shrink-0">{c.name.split('. ')[1]}</button>
+                  ))}
+                </div>
+
+                <div className="space-y-6">
+                  {boqData.categories.map((cat, idx) => (
+                    <div key={idx} className="bg-[#0A2540]/40 border border-white/5 rounded-2xl md:rounded-[30px] overflow-hidden">
+                       <div className="p-6 md:p-8 flex justify-between items-center border-b border-white/5">
+                          <h4 className="font-black text-[#D4AF37] uppercase tracking-widest text-sm">{cat.name}</h4>
+                          <span className="text-white font-black">{formatINR(cat.catTotal)}</span>
+                       </div>
+                       <div className="p-6 md:p-8">
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-left text-sm">
+                               <thead className="text-[10px] uppercase tracking-widest text-white/40">
+                                 <tr><th className="pb-4 border-b border-white/5">Item Description</th><th className="pb-4 border-b border-white/5 text-center">Unit</th><th className="pb-4 border-b border-white/5 text-center">Qty</th><th className="pb-4 border-b border-white/5 text-right">Rate (₹)</th><th className="pb-4 border-b border-white/5 text-right text-[#D4AF37]">Amount (₹)</th></tr>
+                               </thead>
+                               <tbody className="text-white divide-y divide-white/5 font-bold">
+                                 {cat.items.map((item, i) => (
+                                   <tr key={i} className="hover:bg-white/5 transition-colors">
+                                     <td className="py-4 pr-4">{item.desc}</td>
+                                     <td className="py-4 text-white/50 text-center">{item.unit}</td>
+                                     <td className="py-4 text-center">{item.qty.toLocaleString()}</td>
+                                     <td className="py-4 text-right">{item.rate.toLocaleString()}</td>
+                                     <td className="py-4 text-right">{item.amount.toLocaleString()}</td>
+                                   </tr>
+                                 ))}
+                               </tbody>
+                            </table>
+                          </div>
+                       </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB 4: AI INTELLIGENCE (MATCHING SCREENSHOT WITH SIMULATOR) */}
+            {activeTab === "intelligence" && (
+              <div className="space-y-8 animate-in fade-in duration-500">
+                <div className={`p-6 md:p-8 rounded-2xl md:rounded-[30px] border flex items-center gap-6 shadow-xl ${simEngine.net > 0 ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
+                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${simEngine.net > 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-500'}`}>
+                      {simEngine.net > 0 ? <ShieldCheck size={28}/> : <ShieldAlert size={28}/>}
+                   </div>
+                   <div>
+                      <h3 className={`text-xl font-black uppercase tracking-widest mb-2 ${simEngine.net > 0 ? 'text-emerald-400' : 'text-red-500'}`}>
+                        {simEngine.net > 0 ? "PROJECT VIABLE: POSITIVE YEAR 1 CASHFLOW" : "HIGH RISK: NEGATIVE CASHFLOW"}
+                      </h3>
+                      <p className="text-white/80 text-sm leading-relaxed">
+                        {simEngine.net > 0 
+                          ? `Your Year 1 operations safely cover all debt obligations with a surplus of ₹${simEngine.net} Cr. Your DSCR is healthy. This project is ready for bank syndication.`
+                          : `Warning: Your Year 1 EMI (₹${simEngine.emi} Cr) exceeds your projected EBITDA (₹${simEngine.ebitda} Cr). You must increase promoter equity or occupancy to avoid default.`
+                        }
+                      </p>
+                   </div>
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Left Col: Simulator */}
+                  <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
+                    <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-[10px] flex items-center gap-2 mb-8"><Activity size={14}/> What-If Simulator</h4>
+                    
+                    <div className="space-y-8">
+                      <div>
+                        <div className="flex justify-between items-center mb-4"><label className="text-[10px] text-white font-black uppercase tracking-widest">Year 1 Occupancy Ramp</label><span className="text-white font-black">{sim.occ}%</span></div>
+                        <input type="range" min="30" max="90" step="5" value={sim.occ} onChange={e=>setSim({...sim, occ: Number(e.target.value)})} className="w-full accent-[#D4AF37] mb-2" />
+                        <p className="text-[9px] text-white/40 uppercase tracking-widest">Hospitals rarely open at 100% occupancy.</p>
+                      </div>
+                      <div>
+                        <div className="flex justify-between items-center mb-4"><label className="text-[10px] text-white font-black uppercase tracking-widest">Pricing (ARPOB)</label><span className="text-white font-black">₹{sim.arpoB.toLocaleString()}</span></div>
+                        <input type="range" min="8000" max="30000" step="1000" value={sim.arpoB} onChange={e=>setSim({...sim, arpoB: Number(e.target.value)})} className="w-full accent-[#D4AF37] mb-2" />
+                        <p className="text-[9px] text-white/40 uppercase tracking-widest">Avg Revenue Per Occupied Bed.</p>
+                      </div>
+                      <div>
+                        <div className="flex justify-between items-center mb-4"><label className="text-[10px] text-white font-black uppercase tracking-widest">Promoter Equity</label><span className="text-white font-black">{sim.equity}%</span></div>
+                        <input type="range" min="20" max="100" step="5" value={sim.equity} onChange={e=>setSim({...sim, equity: Number(e.target.value)})} className="w-full accent-[#D4AF37] mb-2" />
+                        <p className="text-[9px] text-white/40 uppercase tracking-widest">Higher equity lowers EMI burden.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Col: Outputs */}
+                  <div className="lg:col-span-2 flex flex-col gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
+                        <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-4">Bank Approval Score</p>
+                        <p className={`text-6xl md:text-7xl font-black ${simEngine.score >= 70 ? 'text-emerald-400' : 'text-amber-500'}`}>{simEngine.score}<span className="text-2xl text-white/30">/100</span></p>
+                        <div className="w-full bg-white/5 h-2 rounded-full mt-6 overflow-hidden">
+                          <div className={`h-full ${simEngine.score >= 70 ? 'bg-emerald-400' : 'bg-amber-500'}`} style={{ width: `${simEngine.score}%` }}></div>
+                        </div>
+                      </div>
+                      <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
+                        <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-4">Year 1 DSCR</p>
+                        <p className={`text-5xl font-black ${simEngine.dscr >= 1.3 ? 'text-[#D4AF37]' : 'text-red-500'}`}>{simEngine.dscr}x</p>
+                        <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mt-6">Required Minimum is 1.30x</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1 bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
+                      <p className="text-[10px] text-[#D4AF37] uppercase font-black tracking-widest mb-6">Industry Benchmarking</p>
+                      <table className="w-full text-left text-sm">
+                         <thead className="text-[10px] uppercase tracking-widest text-white/40 border-b border-white/10">
+                           <tr><th className="pb-4">Metric</th><th className="pb-4">Your Simulation</th><th className="pb-4">Industry Avg</th></tr>
+                         </thead>
+                         <tbody className="text-white font-bold divide-y divide-white/5">
+                           <tr><td className="py-5">Year 1 Occupancy</td><td className="py-5 text-[#D4AF37]">{sim.occ}%</td><td className="py-5 text-white/50">40% - 50%</td></tr>
+                           <tr><td className="py-5">ARPOB</td><td className="py-5 text-[#D4AF37]">₹{sim.arpoB.toLocaleString()}</td><td className="py-5 text-white/50">₹12,000 - ₹25,000</td></tr>
+                           <tr><td className="py-5 border-b-0">Promoter Equity</td><td className="py-5 text-[#D4AF37]">{sim.equity}%</td><td className="py-5 text-white/50">25% - 35%</td></tr>
+                         </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+{/* TAB 5: NABH COMPLIANCE (NABH 6TH ED ENHANCED) */}
+            {activeTab === "compliance" && (
+              <div className="space-y-8 animate-in fade-in duration-500">
+                
+                {/* Space Compliance Hero */}
+                <div className={`p-8 rounded-[30px] border flex flex-col md:flex-row items-center gap-6 shadow-xl ${engine.nabhReady ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 ${engine.nabhReady ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-500'}`}>
+                       {engine.nabhReady ? <ShieldCheck size={32}/> : <ShieldAlert size={32}/>}
+                    </div>
+                    <div>
+                       <h3 className={`text-2xl font-black uppercase tracking-widest mb-2 ${engine.nabhReady ? 'text-emerald-400' : 'text-red-500'}`}>
+                         {engine.nabhReady ? "Space Compliant (6th Edition)" : "Critical Space Deficit"}
+                       </h3>
+                       <p className="text-white/80 leading-relaxed text-sm">
+                         Your current layout provides <strong className="text-white">{Math.round(engine.sqFtPerBed)} sq.ft per bed</strong>. 
+                         The NABH 6th Edition minimum requirement for a {engine.type} facility is <strong className="text-white">{Math.round(engine.minAreaPerBed)} sq.ft per bed</strong>.
+                         {!engine.nabhReady && ` You have a deficit of ${Math.round(engine.areaShortfall).toLocaleString()} sq.ft.`}
+                       </p>
+                    </div>
+                </div>
+                
+                {/* NABH 6th Ed Infrastructure & Staffing Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                   
+                   {/* INFRASTRUCTURE STANDARDS */}
+                   <div className="bg-[#0A2540]/40 border border-[#D4AF37]/30 p-6 md:p-8 rounded-[30px] shadow-xl relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-[#D4AF37] text-black text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-lg">6th Ed. Updates</div>
+                      <h4 className="text-xl font-black text-[#D4AF37] mb-6 flex items-center gap-3"><Building2 /> Core Infrastructure Specs</h4>
+                      <div className="space-y-4">
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Stretcher Lifts</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">Min. Size: 1.5m x 2m (15 Passenger)</p>
+                            </div>
+                            <span className="bg-red-500/20 text-red-400 text-[9px] font-black px-2 py-1 rounded uppercase border border-red-500/30">Mandatory</span>
+                         </div>
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Clinical Corridors</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">Min. Width: 2.4 Meters (8 Feet)</p>
+                            </div>
+                            <span className="bg-red-500/20 text-red-400 text-[9px] font-black px-2 py-1 rounded uppercase border border-red-500/30">Mandatory</span>
+                         </div>
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Fire Ramps & Staircases</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">1:12 Gradient Ramp | 2m Wide Stairs</p>
+                            </div>
+                            <span className="bg-amber-500/20 text-amber-500 text-[9px] font-black px-2 py-1 rounded uppercase border border-amber-500/30">Based on Height</span>
+                         </div>
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">HVAC System (OT/ICU)</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">HEPA Filters (0.3 micron) & Pos. Pressure</p>
+                            </div>
+                            <span className="bg-red-500/20 text-red-400 text-[9px] font-black px-2 py-1 rounded uppercase border border-red-500/30">Mandatory</span>
+                         </div>
+                      </div>
+                   </div>
+
+                   {/* MANDATORY STAFFING */}
+                   <div className="bg-[#0A2540]/40 border border-[#D4AF37]/30 p-6 md:p-8 rounded-[30px] shadow-xl relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-[#D4AF37] text-black text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-lg">Strict Audit Check</div>
+                      <h4 className="text-xl font-black text-[#D4AF37] mb-6 flex items-center gap-3"><Users /> Compulsory Officers</h4>
+                      <div className="space-y-4">
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Quality Manager (QMR)</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">Dedicated role for continuous compliance</p>
+                            </div>
+                            <span className="text-emerald-400"><CheckCircle2 size={20}/></span>
+                         </div>
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Infection Control Team</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">Dedicated ICO & 1 ICN per 250 beds</p>
+                            </div>
+                            <span className="text-emerald-400"><CheckCircle2 size={20}/></span>
+                         </div>
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Facility Safety Officer</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">In charge of Fire, Hazmat & Security</p>
+                            </div>
+                            <span className="text-emerald-400"><CheckCircle2 size={20}/></span>
+                         </div>
+                         <div className="bg-[#010810] border border-white/5 p-4 rounded-xl flex justify-between items-center">
+                            <div>
+                               <p className="text-white font-bold text-sm">Nursing Ratio Compliance</p>
+                               <p className="text-white/50 text-[10px] uppercase tracking-widest mt-1">1:1 for ICU | 1:3 for Wards (per shift)</p>
+                            </div>
+                            <span className="text-white font-black text-sm text-right">{engine.nursingStaff} <br/><span className="text-[10px] text-white/50">FTE Req.</span></span>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Existing Approvals Block - Condensed to fit cleanly */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-[#0A2540]/20 border border-white/5 p-6 rounded-[20px]">
+                    <h4 className="text-sm font-black text-white/70 uppercase tracking-widest mb-4">Mandatory Department Approvals</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><CheckCircle2 className="text-emerald-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">Fire NOC</span></div>
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><CheckCircle2 className="text-emerald-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">Pollution (GPCB)</span></div>
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><CheckCircle2 className="text-emerald-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">Clinical Est. Act</span></div>
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><CheckCircle2 className="text-emerald-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">Bio-Medical Waste</span></div>
+                    </div>
+                  </div>
+                  <div className="bg-[#0A2540]/20 border border-white/5 p-6 rounded-[20px]">
+                    <h4 className="text-sm font-black text-white/70 uppercase tracking-widest mb-4">Specialized Modality Licenses</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><AlertCircle className="text-amber-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">AERB (X-Ray/CT)</span></div>
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><AlertCircle className="text-amber-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">PNDT (Ultrasound)</span></div>
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><AlertCircle className="text-amber-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">Pharmacy FDA</span></div>
+                      <div className="bg-[#010810] p-3 rounded-lg border border-white/5 flex items-center gap-2"><AlertCircle className="text-amber-500 w-4 h-4 shrink-0"/><span className="text-xs font-bold text-white/80">Blood Bank</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {/* 🔥 TAB 6: FUNDING (FULLY RESTORED) */}
             {activeTab === "funding" && (
               <div className="space-y-8 md:space-y-10 animate-in fade-in duration-700">
