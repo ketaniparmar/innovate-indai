@@ -430,7 +430,7 @@ const runAIAnalysis = async () => {
               </div>
             )}
 
-       {/* TAB 1: ESTIMATOR (FEASIBILITY ENGINE) */}
+    {/* TAB 1: ESTIMATOR (FEASIBILITY ENGINE) */}
             {activeTab === "estimator" && (
               <div className="space-y-6 md:space-y-8 animate-in fade-in duration-700">
                 
@@ -448,17 +448,48 @@ const runAIAnalysis = async () => {
                   {/* LEFT COLUMN: Sliders */}
                   <div className="space-y-6 md:space-y-8">
                       <div className={GLOW_CARD}>
-                        <div className="mb-6"><label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest"><span>Project Scale</span><span className="text-white">{config.beds} Beds</span></label><input type="range" min="30" max="500" step="5" value={config.beds} onChange={e=>setConfig({...config, beds: Number(e.target.value)})} className="w-full accent-[#D4AF37]" /></div>
-                        <div className="mb-6"><label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest"><span>Stabilized Occupancy</span><span className="text-white">{config.occupancyRate}%</span></label><input type="range" min="40" max="100" step="5" value={config.occupancyRate} onChange={e=>setConfig({...config, occupancyRate: Number(e.target.value)})} className="w-full accent-[#D4AF37]" /></div>
                         
+                        {/* 1. Beds Slider */}
                         <div className="mb-6">
-                          <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest"><span>Total Area</span><span className="text-white">{config.areaSqFt.toLocaleString()} Sqft</span></label>
-                          <input type="range" min="20000" max="400000" step="5000" value={config.areaSqFt} onChange={e=>setConfig({...config, areaSqFt: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
+                          <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest">
+                            <span>Project Scale</span><span className="text-white">{config.beds} Beds</span>
+                          </label>
+                          <input type="range" min="30" max="500" step="5" value={config.beds} onChange={e=>setConfig({...config, beds: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
+                        </div>
+                        
+                        {/* 2. Occupancy Slider */}
+                        <div className="mb-6">
+                          <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest">
+                            <span>Stabilized Occupancy</span><span className="text-white">{config.occupancyRate}%</span>
+                          </label>
+                          <input type="range" min="40" max="100" step="5" value={config.occupancyRate} onChange={e=>setConfig({...config, occupancyRate: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
+                        </div>
+                        
+                        {/* 3. Total Area Slider (WITH DYNAMIC RED LOGIC) */}
+                        <div className="mb-6">
+                          <label className={`text-[10px] font-black flex justify-between mb-3 uppercase tracking-widest transition-colors duration-300 ${engine.nabhReady ? 'text-[#D4AF37]' : 'text-red-500'}`}>
+                            <span>Total Area</span>
+                            <span className={engine.nabhReady ? 'text-white' : 'text-red-400'}>
+                              {config.areaSqFt.toLocaleString()} Sqft
+                            </span>
+                          </label>
+                          
+                          <input 
+                            type="range" 
+                            min="20000" 
+                            max="400000" 
+                            step="5000" 
+                            value={config.areaSqFt} 
+                            onChange={e=>setConfig({...config, areaSqFt: Number(e.target.value)})} 
+                            className={`w-full transition-colors duration-300 ${engine.nabhReady ? 'accent-[#D4AF37]' : 'accent-red-500'}`} 
+                          />
                           
                           {/* 🔥 NABH 6TH EDITION COMPLIANCE ALERT */}
                           {!engine.nabhReady && (
-                            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
-                               <p className="text-[10px] text-red-500 font-black uppercase tracking-widest mb-1 flex items-center gap-1"><AlertCircle size={12}/> NABH 6th Ed. Space Deficit</p>
+                            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-in fade-in duration-300">
+                               <p className="text-[10px] text-red-500 font-black uppercase tracking-widest mb-1 flex items-center gap-1">
+                                 <AlertCircle size={12}/> NABH 6th Ed. Space Deficit
+                               </p>
                                <p className="text-[11px] text-red-200/80 leading-relaxed">
                                  Current area provides <strong className="text-white">{Math.round(engine.sqFtPerBed)} sq.ft/bed</strong>. The new NABH 6th Edition (Jan 2025) requires ~<strong className="text-white">{Math.round(engine.minAreaPerBed)} sq.ft/bed</strong> for a {engine.type} setup. Increase total area by <strong className="text-white">{Math.round(engine.areaShortfall).toLocaleString()} sq.ft</strong> or reduce your bed count to comply.
                                </p>
@@ -466,7 +497,15 @@ const runAIAnalysis = async () => {
                           )}
                         </div>
 
-                        <div className="mb-6"><label className="text-[10px] text-[#D4AF37] font-black block mb-3 uppercase tracking-widest">City Tier Strategy</label><select value={config.cityTier} onChange={e=>setConfig({...config, cityTier: Number(e.target.value)})} className="w-full bg-[#010810] border border-[#D4AF37]/30 p-4 rounded-xl text-sm font-bold text-white outline-none"><option value={1}>Tier 1 (Metro)</option><option value={2}>Tier 2 (Smart City)</option></select></div>
+                        {/* City Tier Dropdown */}
+                        <div className="mb-6">
+                          <label className="text-[10px] text-[#D4AF37] font-black block mb-3 uppercase tracking-widest">City Tier Strategy</label>
+                          <select value={config.cityTier} onChange={e=>setConfig({...config, cityTier: Number(e.target.value)})} className="w-full bg-[#010810] border border-[#D4AF37]/30 p-4 rounded-xl text-sm font-bold text-white outline-none">
+                            <option value={1}>Tier 1 (Metro)</option>
+                            <option value={2}>Tier 2 (Smart City)</option>
+                          </select>
+                        </div>
+
                       </div>
                   </div>
 
@@ -489,7 +528,7 @@ const runAIAnalysis = async () => {
                       <p className="text-xs text-white/50 font-medium mt-4">{safeToFixed(engine.breakEvenYears, 1)} Yrs Break-Even</p>
                     </div>
                     
-                    {/* 🔥 Card 3: TOTAL MANPOWER PLANNING (FTE) - RESTORED */}
+                    {/* Card 3: TOTAL MANPOWER PLANNING (FTE) */}
                     <div className={GLOW_CARD}>
                       <Users className="w-5 h-5 md:w-6 md:h-6 text-[#D4AF37] mb-5" />
                       <div className="flex justify-between items-end mb-5">
@@ -529,7 +568,7 @@ const runAIAnalysis = async () => {
                   </div>
                 </div>
 
-                {/* 🔥 NEW: COST OF DELAY / PAIN FOMO CARD - ADDED HERE */}
+                {/* COST OF DELAY / PAIN FOMO CARD */}
                 <div className="bg-gradient-to-r from-red-500/10 via-amber-500/5 to-[#051626] border border-red-500/30 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-[0_0_30px_rgba(239,68,68,0.1)] mt-8">
                   <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                     <div className="flex-1">
