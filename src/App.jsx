@@ -667,7 +667,7 @@ const runAIAnalysis = async () => {
                   </div>
                 </div>
 
-                {/* --- BOTTOM SECTION: UPGRADED VERIFIED AI OUTPUTS --- */}
+                {/* --- BOTTOM SECTION: ASYMMETRIC BENTO BOX LAYOUT --- */}
                 <div className="space-y-6">
                   
                   {/* Header */}
@@ -676,60 +676,101 @@ const runAIAnalysis = async () => {
                     <p className="text-white/60 text-sm">AI-generated deliverables aligned with NABH standards, ready for execution and approvals.</p>
                   </div>
 
-                  {/* 3-Column Card Layout */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="flex flex-col gap-6">
                     
-                    {/* 🟦 Card A: Zoning Diagrams (Blue) */}
-                    <div className="bg-[#051626] border border-blue-500/20 p-6 rounded-2xl hover:border-blue-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(59,130,246,0.05)] hover:shadow-[0_0_25px_rgba(59,130,246,0.15)] flex flex-col">
-                      <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><Layers className="text-blue-400 w-6 h-6"/></div>
-                      <h4 className="text-base font-black text-white uppercase tracking-widest mb-2 group-hover:text-blue-400 transition-colors">Zoning Diagrams</h4>
-                      <p className="text-xs text-white/50 mb-6 leading-relaxed flex-1">Separating public, semi-restricted, and clinical areas for optimal flow.</p>
-                      <ul className="space-y-3 mb-8 border-t border-white/5 pt-5">
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div> Public vs Clinical</li>
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div> Patient Flow Map</li>
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div> ER Access Points</li>
-                      </ul>
-                      <div className="flex flex-col gap-3 mt-auto">
-                        <button className="w-full py-3 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-blue-500 hover:text-white transition">Preview Zones</button>
-                        <button className="w-full py-3 bg-transparent text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition flex items-center justify-center gap-2"><Download size={14}/> Export PDF</button>
+                    {/* 🟦 Top Row: Massive Full-Width Zoning Card (Blue) */}
+                    <div className="bg-[#051626] border border-blue-500/20 p-6 md:p-8 rounded-[30px] hover:border-blue-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(59,130,246,0.05)] flex flex-col lg:flex-row gap-8">
+                      <div className="flex-1 flex flex-col">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><Layers className="text-blue-400 w-6 h-6"/></div>
+                          <h4 className="text-xl md:text-2xl font-black text-white uppercase tracking-widest group-hover:text-blue-400 transition-colors">
+                            Zoning Diagrams <br/><span className="text-[11px] text-white/50 normal-case tracking-normal">(Public, Clinical)</span>
+                          </h4>
+                        </div>
+                        <p className="text-sm text-white/60 mb-6 leading-relaxed">AI-generated zoning layouts separating public, semi-restricted, and clinical areas for optimal hospital flow.</p>
+                        
+                        <p className="text-[10px] text-blue-400 font-black uppercase tracking-widest mb-3">Key Inclusions</p>
+                        <ul className="space-y-3 mb-8 flex-1">
+                          <li className="text-xs text-white/80 font-bold flex items-center gap-3"><div className="w-2 h-2 rounded-sm bg-blue-400"></div> Public vs Clinical zoning</li>
+                          <li className="text-xs text-white/80 font-bold flex items-center gap-3"><div className="w-2 h-2 rounded-sm bg-blue-400"></div> Patient flow mapping</li>
+                          <li className="text-xs text-white/80 font-bold flex items-center gap-3"><div className="w-2 h-2 rounded-sm bg-amber-500"></div> Emergency access planning</li>
+                          <li className="text-xs text-white/80 font-bold flex items-center gap-3"><div className="w-2 h-2 rounded-sm bg-emerald-400"></div> Infection control zoning</li>
+                        </ul>
+                        
+                        <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                          <button className="px-6 py-3 bg-[#D4AF37] text-black rounded-lg text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_0_15px_rgba(212,175,55,0.2)]">View Zoning Diagram</button>
+                          <button className="px-6 py-3 bg-[#0A2540] text-white hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition border border-white/5">Export PDF</button>
+                        </div>
+                      </div>
+                      
+                      {/* Image Injection: Blue Zoning */}
+                      <div className="lg:w-[55%] min-h-[250px] bg-[#010810] rounded-2xl border border-white/10 overflow-hidden relative flex items-center justify-center group/img">
+                         <img src="/zoning-blue.jpg" alt="Zoning Diagram" className="w-full h-full object-cover opacity-80 group-hover/img:opacity-100 transition-opacity duration-300" />
+                         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-transparent group-hover/img:opacity-0 transition-opacity"></div>
                       </div>
                     </div>
 
-                    {/* 🟩 Card B: Department Layouts (Green) */}
-                    <div className="bg-[#051626] border border-emerald-500/20 p-6 rounded-2xl hover:border-emerald-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:shadow-[0_0_25px_rgba(16,185,129,0.15)] flex flex-col">
-                      <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><Grid className="text-emerald-400 w-6 h-6"/></div>
-                      <h4 className="text-base font-black text-white uppercase tracking-widest mb-2 group-hover:text-emerald-400 transition-colors">Room Layouts</h4>
-                      <p className="text-xs text-white/50 mb-6 leading-relaxed flex-1">Detailed layouts with optimized room sizes and adjacency logic.</p>
-                      <ul className="space-y-3 mb-8 border-t border-white/5 pt-5">
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> OPD, ICU, OT Plans</li>
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Area Allocations</li>
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-400"></div> Equip. Ready Blocks</li>
-                      </ul>
-                      <div className="flex flex-col gap-3 mt-auto">
-                        <button className="w-full py-3 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition">Explore Plans</button>
-                        <button className="w-full py-3 bg-transparent text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition flex items-center justify-center gap-2"><Download size={14}/> Get CAD / PDF</button>
-                      </div>
-                    </div>
+                    {/* 🟩 & 🟨 Bottom Row: 50/50 Split Grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      
+                      {/* Card B: Department Layouts (Green) */}
+                      <div className="bg-[#051626] border border-emerald-500/20 p-6 md:p-8 rounded-[30px] hover:border-emerald-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(16,185,129,0.05)] flex flex-col">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><Grid className="text-emerald-400 w-6 h-6"/></div>
+                          <h4 className="text-lg font-black text-white uppercase tracking-widest group-hover:text-emerald-400 transition-colors">Department & <br/>Room Layouts</h4>
+                        </div>
+                        <p className="text-xs text-white/50 mb-6 leading-relaxed">Detailed layouts with optimized room sizes and adjacency logic.</p>
+                        
+                        {/* Image Injection: Green Layout */}
+                        <div className="w-full h-32 bg-[#010810] rounded-xl border border-white/10 mb-6 flex items-center justify-center overflow-hidden">
+                           <img src="/layout-green.jpg" alt="Room Layouts" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                        </div>
 
-                    {/* 🟨 Card C: Space Reports & DPR (Yellow) */}
-                    <div className="bg-[#051626] border border-[#D4AF37]/20 p-6 rounded-2xl hover:border-[#D4AF37]/60 transition-all duration-300 group shadow-[0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] flex flex-col">
-                      <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"><FileText className="text-[#D4AF37] w-6 h-6"/></div>
-                      <h4 className="text-base font-black text-white uppercase tracking-widest mb-2 group-hover:text-[#D4AF37] transition-colors">DPR Space Data</h4>
-                      <p className="text-xs text-white/50 mb-6 leading-relaxed flex-1">Comprehensive data tables for budgeting and bank approvals.</p>
-                      <ul className="space-y-3 mb-8 border-t border-white/5 pt-5">
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div> Dept. Area Statements</li>
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div> Built-up Totals</li>
-                        <li className="text-[10px] text-white/70 uppercase font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></div> Costing Inputs</li>
-                      </ul>
-                      <div className="flex flex-col gap-3 mt-auto">
-                        <button className="w-full py-3 bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-[#D4AF37] hover:text-[#051626] transition">View Data</button>
-                        <button className="w-full py-3 bg-transparent text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition flex items-center justify-center gap-2"><Download size={14}/> Export Report</button>
+                        <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-3">Key Inclusions</p>
+                        <ul className="space-y-3 mb-8 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-3">
+                          <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> OPD, ICU, OT Plans</li>
+                          <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> Room-wise area</li>
+                          <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> Equip. Ready Blocks</li>
+                          <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> Staff circulation</li>
+                        </ul>
+                        
+                        <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+                          <button className="flex-1 py-3 bg-[#D4AF37] text-black rounded-lg text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform">Explore Layouts</button>
+                          <button className="flex-1 py-3 bg-[#0A2540] border border-white/5 text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition">Export CAD/PDF</button>
+                        </div>
                       </div>
-                    </div>
 
+                      {/* Card C: Space Reports (Gold) */}
+                      <div className="bg-[#051626] border border-[#D4AF37]/20 p-6 md:p-8 rounded-[30px] hover:border-[#D4AF37]/60 transition-all duration-300 group shadow-[0_0_15px_rgba(212,175,55,0.05)] flex flex-col">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><FileText className="text-[#D4AF37] w-6 h-6"/></div>
+                          <h4 className="text-lg font-black text-white uppercase tracking-widest group-hover:text-[#D4AF37] transition-colors">Space Reports & <br/>DPR Data</h4>
+                        </div>
+                        <p className="text-xs text-white/50 mb-6 leading-relaxed">Comprehensive data tables for planning, budgeting, and bank approvals.</p>
+                        
+                        {/* Image Injection: Gold Report */}
+                        <div className="w-full h-32 bg-[#010810] rounded-xl border border-white/10 mb-6 flex items-center justify-center overflow-hidden">
+                           <img src="/report-gold.jpg" alt="Space Reports" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                        </div>
+
+                        <p className="text-[10px] text-[#D4AF37] font-black uppercase tracking-widest mb-3">Key Inclusions</p>
+                        <ul className="space-y-3 mb-8 flex-1">
+                          <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> Dept. wise area statements</li>
+                          <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> Built-up area calculations</li>
+                          <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> Cost estimation inputs</li>
+                          <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> NABH compliance checklist</li>
+                        </ul>
+                        
+                        <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+                          <button className="flex-1 py-3 bg-[#D4AF37] text-black rounded-lg text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform">View Reports</button>
+                          <button className="flex-1 py-3 bg-[#8B6508] border border-[#D4AF37]/50 text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition hover:bg-[#D4AF37] hover:text-black">Get Approved Plans</button>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
 
-                  {/* Trust & Compliance Highlight (NABH Badge) */}
+                  {/* Trust Badge & Features Strip & CTA */}
                   <div className="bg-gradient-to-r from-amber-500/20 to-[#0A2540] border border-amber-500/40 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-xl relative overflow-hidden mt-8">
                     <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center shrink-0 border border-amber-500/30">
                       <ShieldCheck className="w-8 h-8 text-amber-400" />
@@ -745,7 +786,6 @@ const runAIAnalysis = async () => {
                     </div>
                   </div>
 
-                  {/* Smart Features Strip */}
                   <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 py-8 border-y border-white/5 my-8">
                     <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Zap size={16} className="text-[#D4AF37]"/> Instant Generation</span>
                     <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Activity size={16} className="text-[#D4AF37]"/> Real-Time Updates</span>
@@ -753,7 +793,6 @@ const runAIAnalysis = async () => {
                     <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-white/60"><Settings size={16} className="text-[#D4AF37]"/> Specialty Customization</span>
                   </div>
 
-                  {/* Final CTA Section */}
                   <div className="bg-[#010810] border border-white/10 p-8 md:p-12 rounded-3xl text-center shadow-2xl relative overflow-hidden">
                      <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-emerald-500 to-[#D4AF37]"></div>
                      <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-8 mt-2">Ready to Download Your Hospital Plan?</h3>
@@ -767,10 +806,11 @@ const runAIAnalysis = async () => {
                 </div>
               </div>
             )}
-
-            {/* TAB 3: SMART BOQ (MATCHING SCREENSHOT) */}
+            {/* TAB 3: SMART BOQ (FULLY FILTERABLE) */}
             {activeTab === "boq" && (
               <div className="space-y-8 animate-in fade-in duration-500">
+                
+                {/* Top Metrics Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-[#0A2540]/60 border border-white/5 p-6 rounded-2xl md:rounded-[30px] flex flex-col justify-center shadow-xl">
                     <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-2">Total BOQ Value</p>
@@ -783,31 +823,52 @@ const runAIAnalysis = async () => {
                   <div className="bg-[#0A2540]/60 border border-white/5 p-6 rounded-2xl md:rounded-[30px] flex flex-col justify-center shadow-xl">
                     <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-4">Export Detailed BOQ</p>
                     <div className="flex gap-4">
-                      <button className="flex-1 py-3 bg-emerald-500/10 border border-emerald-500 text-emerald-400 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-emerald-500/20"><Download size={14}/> Excel</button>
-                      <button className="flex-1 py-3 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#D4AF37]/20"><Download size={14}/> PDF</button>
+                      <button className="flex-1 py-3 bg-emerald-500/10 border border-emerald-500 text-emerald-400 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-emerald-500/20 transition-colors"><Download size={14}/> Excel</button>
+                      <button className="flex-1 py-3 bg-[#D4AF37]/10 border border-[#D4AF37] text-[#D4AF37] rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#D4AF37]/20 transition-colors"><Download size={14}/> PDF</button>
                     </div>
                   </div>
                 </div>
                 
+                {/* DYNAMIC FILTER TABS */}
                 <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
-                  <button className="px-6 py-2 bg-[#D4AF37] text-[#051626] rounded-full font-black text-[10px] uppercase tracking-widest shrink-0">All Categories</button>
-                  {boqData.categories.map((c,i) => (
-                    <button key={i} className="px-6 py-2 bg-[#0A2540] border border-white/5 text-white/50 rounded-full font-bold text-[10px] uppercase tracking-widest hover:text-white shrink-0">{c.name.split('. ')[1]}</button>
+                  <button 
+                    onClick={() => setActiveBoqCategory("all")}
+                    className={`px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-widest shrink-0 transition-colors ${activeBoqCategory === "all" ? "bg-[#D4AF37] text-[#051626] shadow-[0_0_15px_rgba(212,175,55,0.4)]" : "bg-[#0A2540] border border-white/5 text-white/50 hover:text-white"}`}
+                  >
+                    All Categories
+                  </button>
+                  {boqData.categories.map((c) => (
+                    <button 
+                      key={c.id} 
+                      onClick={() => setActiveBoqCategory(c.id)}
+                      className={`px-6 py-3 rounded-full font-bold text-[10px] uppercase tracking-widest shrink-0 transition-colors ${activeBoqCategory === c.id ? "bg-[#D4AF37] text-[#051626] shadow-[0_0_15px_rgba(212,175,55,0.4)]" : "bg-[#0A2540] border border-white/5 text-white/50 hover:text-white"}`}
+                    >
+                      {c.name.split('. ')[1] || c.name}
+                    </button>
                   ))}
                 </div>
 
+                {/* FILTERED CATEGORY LIST */}
                 <div className="space-y-6">
-                  {boqData.categories.map((cat, idx) => (
-                    <div key={idx} className="bg-[#0A2540]/40 border border-white/5 rounded-2xl md:rounded-[30px] overflow-hidden">
-                       <div className="p-6 md:p-8 flex justify-between items-center border-b border-white/5">
+                  {boqData.categories
+                    .filter(cat => activeBoqCategory === "all" || cat.id === activeBoqCategory)
+                    .map((cat, idx) => (
+                    <div key={idx} className="bg-[#0A2540]/40 border border-white/5 rounded-2xl md:rounded-[30px] overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-300">
+                       <div className="p-6 md:p-8 flex justify-between items-center border-b border-white/5 bg-[#051626]/50">
                           <h4 className="font-black text-[#D4AF37] uppercase tracking-widest text-sm">{cat.name}</h4>
-                          <span className="text-white font-black">{formatINR(cat.catTotal)}</span>
+                          <span className="text-white font-black text-lg">{formatINR(cat.catTotal)}</span>
                        </div>
                        <div className="p-6 md:p-8">
                           <div className="overflow-x-auto">
                             <table className="w-full text-left text-sm">
                                <thead className="text-[10px] uppercase tracking-widest text-white/40">
-                                 <tr><th className="pb-4 border-b border-white/5">Item Description</th><th className="pb-4 border-b border-white/5 text-center">Unit</th><th className="pb-4 border-b border-white/5 text-center">Qty</th><th className="pb-4 border-b border-white/5 text-right">Rate (₹)</th><th className="pb-4 border-b border-white/5 text-right text-[#D4AF37]">Amount (₹)</th></tr>
+                                 <tr>
+                                   <th className="pb-4 border-b border-white/5">Item Description</th>
+                                   <th className="pb-4 border-b border-white/5 text-center">Unit</th>
+                                   <th className="pb-4 border-b border-white/5 text-center">Qty</th>
+                                   <th className="pb-4 border-b border-white/5 text-right">Rate (₹)</th>
+                                   <th className="pb-4 border-b border-white/5 text-right text-[#D4AF37]">Amount (₹)</th>
+                                 </tr>
                                </thead>
                                <tbody className="text-white divide-y divide-white/5 font-bold">
                                  {cat.items.map((item, i) => (
@@ -816,7 +877,7 @@ const runAIAnalysis = async () => {
                                      <td className="py-4 text-white/50 text-center">{item.unit}</td>
                                      <td className="py-4 text-center">{item.qty.toLocaleString()}</td>
                                      <td className="py-4 text-right">{item.rate.toLocaleString()}</td>
-                                     <td className="py-4 text-right">{item.amount.toLocaleString()}</td>
+                                     <td className="py-4 text-right text-[#D4AF37]">{item.amount.toLocaleString()}</td>
                                    </tr>
                                  ))}
                                </tbody>
@@ -849,29 +910,7 @@ const runAIAnalysis = async () => {
                    </div>
                 </div>
                 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* Left Col: Simulator */}
-                  <div className="bg-[#0A2540]/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
-                    <h4 className="text-[#D4AF37] font-black uppercase tracking-widest text-[10px] flex items-center gap-2 mb-8"><Activity size={14}/> What-If Simulator</h4>
-                    
-                    <div className="space-y-8">
-                      <div>
-                        <div className="flex justify-between items-center mb-4"><label className="text-[10px] text-white font-black uppercase tracking-widest">Year 1 Occupancy Ramp</label><span className="text-white font-black">{sim.occ}%</span></div>
-                        <input type="range" min="30" max="90" step="5" value={sim.occ} onChange={e=>setSim({...sim, occ: Number(e.target.value)})} className="w-full accent-[#D4AF37] mb-2" />
-                        <p className="text-[9px] text-white/40 uppercase tracking-widest">Hospitals rarely open at 100% occupancy.</p>
-                      </div>
-                      <div>
-                        <div className="flex justify-between items-center mb-4"><label className="text-[10px] text-white font-black uppercase tracking-widest">Pricing (ARPOB)</label><span className="text-white font-black">₹{sim.arpoB.toLocaleString()}</span></div>
-                        <input type="range" min="8000" max="30000" step="1000" value={sim.arpoB} onChange={e=>setSim({...sim, arpoB: Number(e.target.value)})} className="w-full accent-[#D4AF37] mb-2" />
-                        <p className="text-[9px] text-white/40 uppercase tracking-widest">Avg Revenue Per Occupied Bed.</p>
-                      </div>
-                      <div>
-                        <div className="flex justify-between items-center mb-4"><label className="text-[10px] text-white font-black uppercase tracking-widest">Promoter Equity</label><span className="text-white font-black">{sim.equity}%</span></div>
-                        <input type="range" min="20" max="100" step="5" value={sim.equity} onChange={e=>setSim({...sim, equity: Number(e.target.value)})} className="w-full accent-[#D4AF37] mb-2" />
-                        <p className="text-[9px] text-white/40 uppercase tracking-widest">Higher equity lowers EMI burden.</p>
-                      </div>
-                    </div>
-                  </div>
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                   {/* Right Col: Outputs */}
                   <div className="lg:col-span-2 flex flex-col gap-6">
