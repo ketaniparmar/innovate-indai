@@ -1,28 +1,25 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-// STRICTLY FILTERED IMPORTS (3D/Canvas Removed entirely)
+// STRICTLY FILTERED IMPORTS
 import {
   Building2, Calculator, Grid, List, ClipboardCheck, Landmark, FileText, ShoppingCart,
   BarChart3, MapPin, Menu, X, TrendingUp, PieChart, Users, Layers, Cpu, Download,
   CheckCircle2, AlertCircle, FileWarning, Briefcase, ArrowRight, Clock, ClipboardList,
   Wallet, User, Phone, Mail, Globe, Activity, ShieldCheck, CreditCard, Zap, Star, Check, 
   PlusCircle, Brain, FileSearch, ShieldAlert, Target, Map, Box, Save, Timer, BellRing, 
-  TrendingDown, Cloud, Database, Settings // <--- ADDED THESE TWO HERE
+  TrendingDown, Cloud, Database, Settings
 } from "lucide-react";
 
 // ============================================================================
-// 1. CORE CONFIGURATION
+// 1. CORE CONFIGURATION (SECURED)
 // ============================================================================
-const supabaseUrl = "https://udljxsjkqdrpqmxamwkd.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkbGp4c2prcWRycHFteGFtd2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI0Mzg1NDAsImV4cCI6MjA4ODAxNDU0MH0.gXuw6cNBRr8HCAOOsB3Z3xYuUDeIvDlXXIcvhuTKe_c";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const API_BASE_URL = window.location.hostname === "localhost" ? "http://localhost:10000" : "https://innovate-india-suite.onrender.com";
 
-const USER_CONFIG = { name: "director@hospitalprojectconsultancy.com", role: "VERIFIED CONSULTANT" };
-const RESEND_API_KEY = "re_cjZ21RBy_8chZH1vKAPCgJEJrNk5kpvKR";
-
-// ============================================================================
+const USER_CONFIG = { email: "director@hospitalprojectconsultancy.com", role: "VERIFIED CONSULTANT" };// ============================================================================
 // 2. FULL DATA ARRAYS
 // ============================================================================
 const GUJARAT_CITIES = ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Gandhidham", "Anand", "Navsari", "Morbi", "Bharuch", "Vapi"];
@@ -37,61 +34,6 @@ const PACKAGES = [
 
 const ADD_ONS_LIST = [{ id: "excel", name: "Financial Excel", price: 999 }, { id: "script", name: "Investor Pitch Script", price: 1999 }, { id: "layout", name: "Layout Concepts", price: 2999 }, { id: "nabh", name: "NABH Toolkit", price: 4999 }];
 
-// ============================================================================
-  // 📥 PDF GENERATOR TRIGGER (REPLACING RAZORPAY FOR NOW)
-  // ============================================================================
-  const handleRazorpayCheckout = async () => {
-    setIsSyncing(true);
-    try {
-      // 1. Send all calculated data to the backend PDF engine
-      const response = await fetch(`${API_BASE_URL}/api/export/dpr-pdf`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          projectName: clientDetails.projectName || "Apex Healthcare Greenfield",
-          clientName: clientDetails.name || "Promoter Group",
-          config, 
-          engine, 
-          sim, 
-          boqData 
-        })
-      });
-
-      if (!response.ok) {
-        const errData = await response.text();
-        throw new Error(errData || "Failed to generate document");
-      }
-
-      // 2. Convert the response stream into a downloadable file in the browser
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${(clientDetails.projectName || 'Hospital').replace(/\s+/g, '_')}_Master_DPR.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      
-      alert("✅ Master DPR Successfully Generated & Downloaded!");
-      
-    } catch (error) {
-      console.error(error);
-      alert("Error generating DPR: " + error.message);
-    }
-    setIsSyncing(false);
-  };
-const navItems = [
-  { id: "estimator", label: "Feasibility Engine", icon: Calculator }, 
-  { id: "architect", label: "AI Architect", icon: Grid },
-  { id: "boq", label: "Smart BOQ", icon: List },
-  { id: "intelligence", label: "AI Intelligence", icon: Brain }, 
-  { id: "compliance", label: "NABH Compliance", icon: ClipboardCheck }, 
-  { id: "funding", label: "Funding & Loans", icon: Landmark },
-  { id: "vendors", label: "Supply Chain", icon: ShoppingCart },
-  { id: "admin", label: "Dashboard", icon: BarChart3 }, 
-  { id: "contact", label: "Contact Us", icon: MapPin },
-  { id: "dpr", label: "DPR Checkout", icon: FileText } // MOVED TO THE ABSOLUTE END
-];
 const VENDOR_DIRECTORY = [
   { id: 1, name: "Lepu Medical", category: "Equipment Supplier", location: "Surat, India", rating: 4.9 },
   { id: 2, name: "Diacare Solutions", category: "Turnkey Setup", location: "Ahmedabad, India", rating: 4.8 },
@@ -112,10 +54,9 @@ const LOAN_TYPES = [
   { title: "10. Vendor Financing", desc: "Equipment OEMs offer financing through partner banks." }
 ];
 
-const DPR_STRUCTURE = ["1. Executive Summary", "2. Promoter Profile", "3. Market & Catchment Analysis", "4. Hospital Concept & Specialties", "5. Infrastructure & Architecture Plan", "6. Medical Equipment BOQ", "7. Manpower & HR Strategy", "8. Regulatory & Compliance", "9. Project Cost Estimation (CAPEX)", "10. Revenue Model & PMJAY Integration", "11. 10-Year Financial Projections", "12. ROI & Break-Even Analysis", "13. SWOT & Risk Analysis", "14. Subsidies & Government Incentives"];
+const DPR_STRUCTURE = ["1. Executive Summary", "2. Promoter Profile", "3. Market Analysis", "4. Hospital Concept", "5. Infrastructure Plan", "6. Medical Equipment BOQ", "7. Manpower Strategy", "8. Regulatory & Compliance", "9. Project Cost (CAPEX)", "10. Revenue Model", "11. 10-Year Projections", "12. ROI Analysis", "13. SWOT Analysis", "14. Subsidies"];
 
-const GLOW_CARD = "bg-[#0A2540]/60 backdrop-blur-md border border-white/5 rounded-2xl md:rounded-[30px] p-6 md:p-8 shadow-xl hover:border-[#D4AF37]/50 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] transition-all duration-500";
-const GOLDEN_FOMO_CARD = "bg-gradient-to-br from-[#D4AF37]/20 to-[#0A2540] border border-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.2)] rounded-2xl md:rounded-[30px] p-6 md:p-8 relative overflow-hidden";
+const GLOW_CARD = "bg-[#0A2540]/60 backdrop-blur-md border border-white/5 rounded-2xl md:rounded-[30px] p-6 md:p-8 shadow-xl hover:border-[#D4AF37]/50 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)] transition-all duration-500 relative overflow-hidden";
 
 const formatINR = (val) => val === 0 || isNaN(val) ? "₹0.00 Cr" : `₹${(val / 10000000).toFixed(2)} Cr`;
 const safeToFixed = (val, decimals = 2) => (Number.isFinite(val) ? val : 0).toFixed(decimals);
@@ -128,7 +69,6 @@ function classifyHospital(beds) {
   return { type: "Corporate / Teaching", areaPerBed: 1700, operatingRatio: 0.70, arprob: 25000 }; 
 }
 
-const loadRazorpay = () => new Promise((resolve) => { const script = document.createElement('script'); script.src = 'https://checkout.razorpay.com/v1/checkout.js'; script.onload = () => resolve(true); script.onerror = () => resolve(false); document.body.appendChild(script); });
 const formatTimer = (sec) => { const m = Math.floor(sec / 60); const s = sec % 60; return `${m}:${s.toString().padStart(2, "0")}`; };
 
 // ============================================================================
@@ -226,22 +166,16 @@ export default function App() {
     const netCashflow = (ebitda - emi) / 10000000;
     const loanScore = Math.round(Math.min(95, Math.max(40, dscr * 50)));
 
- // (Inside your engine useMemo block, update the return statement to include these variables)
-    
-    // Standard Hospital Rule of Thumb: ~3 total staff per bed.
     const nursingStaff = Math.ceil(beds * 1.5);
-    const doctors = Math.ceil(beds * 0.15); // RMOs + Consultants
-    const paramedical = Math.ceil(beds * 0.5); // Lab, Radiology, OT Techs, Pharmacy
-    const adminSupport = Math.ceil(beds * 0.85); // Billing, HR, IT, Housekeeping, Security
+    const doctors = Math.ceil(beds * 0.15); 
+    const paramedical = Math.ceil(beds * 0.5); 
+    const adminSupport = Math.ceil(beds * 0.85); 
     const totalStaff = nursingStaff + doctors + paramedical + adminSupport;
 
     return {
         type: tConf.type, sqFtPerBed, minAreaPerBed, nabhReady, maturityScore, areaShortfall,
         isSaturated: config.cityTier === 1 && beds < 50, dailyOPD: Math.ceil(beds * 3), loanScore, operatingRatio: tConf.operatingRatio,
-        
-        // 🚀 INJECT THE NEW HR MANPOWER DATA HERE
         nursingStaff, doctors, paramedical, adminSupport, totalStaff,
-        
         ipdArea: area * 0.45, icuOtArea: area * 0.20, area, beds,
         totalProjectCost: tCst, totalRevenue: rev, ebitda, ebitdaMargin: rev > 0 ? (ebitda / rev) * 100 : 0,
         dscr, breakEvenYears: ebitda > 0 ? (tCst / ebitda) : 0, loanAmount: loanAmt, equity: tCst - loanAmt, annualEMI: emi, netCashflow
@@ -281,55 +215,49 @@ export default function App() {
     });
     return { categories: processedCats, grandTotal };
   }, [engine.area, engine.beds]);
+  
   const activePackage = PACKAGES.find(p => p.id === pricingState.packageId) || PACKAGES[0];
   const totalAmountDue = useMemo(() => {
-    // If timer is > 0, they get the promo price. Otherwise, they pay full base price.
     let dynamicPrice = fomo.timer > 0 ? activePackage.promoPrice : activePackage.basePrice;
-    
     const addons = selectedAddOns.reduce((t, id) => t + (ADD_ONS_LIST.find(a => a.id === id)?.price || 0), 0);
     return dynamicPrice + addons;
   }, [activePackage, selectedAddOns, fomo.timer]);
 
-  // ============================================================================
-  // 💾 EXPORT & SAAS FUNCTIONS
-  // ============================================================================
-  const triggerLeadCapture = (actionType) => { setLeadActionType(actionType); setShowLeadModal(true); };
-
-  const saveProject = async () => {
-    const { error } = await supabase.from("projects").insert([{ project_name: clientDetails.projectName || "New DPR", config, engine }]);
-    if (error) alert("Save failed: " + error.message); else alert("Project Saved to Cloud!");
+  const handleLeadSubmit = async () => {
+    if (!clientDetails.name || !clientDetails.phone) return alert("Please provide Name and Phone.");
+    setIsSyncing(true);
+    try { await supabase.from('leads').insert([{ name: clientDetails.name, phone: clientDetails.phone, action_type: leadActionType }]); } catch(e) {}
+    setShowLeadModal(false); setIsSyncing(false); alert(`Thank you! Our expert will contact you regarding ${leadActionType}.`);
   };
 
-const runAIAnalysis = async () => {
+  const handleRazorpayCheckout = async () => {
+    setIsSyncing(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/export/dpr-pdf`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projectName: clientDetails.projectName || "Apex Healthcare Greenfield", clientName: clientDetails.name || "Promoter Group", config, engine, sim, boqData })
+      });
+      if (!response.ok) throw new Error(await response.text() || "Failed to generate document");
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `${(clientDetails.projectName || 'Hospital').replace(/\s+/g, '_')}_Master_DPR.pdf`; document.body.appendChild(a); a.click(); a.remove();
+      alert("✅ Master DPR Successfully Generated & Downloaded!");
+    } catch (error) { alert("Error generating DPR: " + error.message); }
+    setIsSyncing(false);
+  };
+
+  const runAIAnalysis = async () => {
     setAiLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/ai/analyze-project`, { 
-        method: "POST", 
-        headers: { "Content-Type": "application/json" }, 
-        body: JSON.stringify({ config, engine, sim }) 
-      });
-      
+      const res = await fetch(`${API_BASE_URL}/api/ai/analyze-project`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ config, engine, sim }) });
       const data = await res.json();
-      
-      if (!res.ok || data.error) {
-        throw new Error(data.error || "Server connection failed.");
-      }
-      
-      // We only want the TEXT result from the AI, not the request object
+      if (!res.ok || data.error) throw new Error(data.error || "Server connection failed.");
       setAiReport(data.result);
-      
-    } catch (e) { 
-      console.error(e);
-      alert(`AI analysis failed: ${e.message}`); 
-    }
+    } catch (e) { alert(`AI analysis failed: ${e.message}`); }
     setAiLoading(false);
   };
-  const handleVendorApply = async () => {
-    if (!vendorDetails.company || !vendorDetails.contact) return alert("Required fields missing.");
-    setIsSyncing(true);
-    try { await supabase.from('vendors').insert([{ company_name: vendorDetails.company, category: vendorDetails.category, contact: vendorDetails.contact }]); } catch(e) {}
-    setVendorDetails({ company: "", category: "Consultant", contact: "" }); setIsSyncing(false); alert("Application Submitted!");
-  };
+
+  const triggerLeadCapture = (actionType) => { setLeadActionType(actionType); setShowLeadModal(true); };
 
   const navItems = [
     { id: "estimator", label: "Feasibility Engine", icon: Calculator }, 
@@ -338,10 +266,10 @@ const runAIAnalysis = async () => {
     { id: "intelligence", label: "AI Intelligence", icon: Brain }, 
     { id: "compliance", label: "NABH Compliance", icon: ClipboardCheck }, 
     { id: "funding", label: "Funding & Loans", icon: Landmark },
-    { id: "dpr", label: "DPR Checkout", icon: FileText },
     { id: "vendors", label: "Supply Chain", icon: ShoppingCart },
     { id: "admin", label: "Dashboard", icon: BarChart3 }, 
-    { id: "contact", label: "Contact Us", icon: MapPin }
+    { id: "contact", label: "Contact Us", icon: MapPin },
+    { id: "dpr", label: "DPR Checkout", icon: FileText }
   ];
 
   return (
@@ -372,7 +300,6 @@ const runAIAnalysis = async () => {
 
       {/* SIDEBAR */}
       <aside className={`fixed inset-y-0 left-0 z-40 transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0 transition duration-300 w-72 bg-[#051626] border-r border-white/5 flex flex-col shrink-0 mt-6 md:mt-0 pt-2 md:pt-0 shadow-2xl`}>
-       {/* CLICKABLE LOGO LINKING TO MAIN SITE */}
         <a href="https://hospitalprojectconsultancy.com/index.html" className="p-6 border-b border-white/5 flex items-center gap-3 hover:bg-white/5 transition-colors cursor-pointer group decoration-transparent">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#F1CF6D] flex items-center justify-center text-[#0A2540] shadow-[0_0_15px_rgba(212,175,55,0.4)] shrink-0 group-hover:scale-105 transition-transform"><Building2 /></div>
           <div className="flex flex-col"><span className="text-xl font-black tracking-widest uppercase text-white">INNOVATE <span className="text-[#FBC02D]">INDAI</span></span><span className="text-[7px] text-gray-400 uppercase tracking-[0.2em] mt-1 font-semibold">Hospital Project OS</span></div>
@@ -400,12 +327,9 @@ const runAIAnalysis = async () => {
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-white"><Menu className="w-8 h-8" /></button>
           
           <div className="flex gap-4 md:gap-8 items-center text-xs font-bold tracking-widest uppercase">
-             
-             {/* 🔥 NEW: ESCAPE HATCH TO MAIN SITE */}
              <a href="https://hospitalprojectconsultancy.com/index.html" className="hidden md:flex items-center gap-2 text-white/50 hover:text-white transition-colors">
                <Globe size={14} /> Main Website
              </a>
-             
              <button onClick={() => setActiveTab('dpr')} className="px-6 py-2.5 bg-[#D4AF37] text-[#0A2540] rounded-full hover:bg-white transition-all shadow-[0_0_15px_rgba(212,175,55,0.3)] flex items-center gap-2">
                <Download size={14}/> Secure DPR
              </button>
@@ -431,89 +355,70 @@ const runAIAnalysis = async () => {
               </div>
             )}
 
-    {/* TAB 1: ESTIMATOR (FEASIBILITY ENGINE) */}
+            {/* TAB 1: ESTIMATOR (FEASIBILITY ENGINE) */}
             {activeTab === "estimator" && (
               <div className="space-y-6 md:space-y-8 animate-in fade-in duration-700">
-                
-                {/* Hero / Pain-Gain Banner */}
-                <div className="bg-gradient-to-r from-red-500/10 to-[#051626] border border-red-500/20 p-6 md:p-10 rounded-2xl md:rounded-[30px] flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl">
-                   <div>
-                     <h2 className="text-2xl md:text-4xl font-black mb-2 text-white tracking-tighter uppercase">Are Bank Loans Giving You a <span className="text-red-500">Headache?</span></h2>
-                     <p className="text-white/70 text-sm max-w-3xl leading-relaxed">Stop guessing your project costs. Unrealistic revenue projections and missing market analysis lead to instant bank rejections. Use this engine to generate a mathematically flawless, Bank-Ready DPR in exactly 60 seconds.</p>
-                   </div>
-                   <button onClick={() => setActiveTab('dpr')} className="w-full md:w-auto px-8 py-4 bg-red-500 text-white rounded-xl font-black uppercase text-xs tracking-widest hover:bg-red-400 transition-colors shrink-0">Skip to Checkout</button>
+                <div className="relative w-full h-[300px] rounded-[40px] overflow-hidden border border-[#D4AF37]/30 shadow-2xl group">
+                    <img src="/images/start-bg.jpg" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105" alt="Start Journey" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#010810] via-[#010810]/60 to-transparent flex flex-col justify-center p-12">
+                        <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">Precision <span className="text-[#D4AF37]">Modeling</span></h2>
+                        <p className="max-w-xl text-white/80 text-lg leading-relaxed">Turn your vision into a bank-ready financial model. Adjust parameters to see real-time impact on ROI.</p>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-                  
-                  {/* LEFT COLUMN: Sliders */}
-                  <div className="space-y-6 md:space-y-8">
-                      <div className={GLOW_CARD}>
-                        
-                        {/* 1. Beds Slider */}
-                        <div className="mb-6">
-                          <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest">
-                            <span>Project Scale</span><span className="text-white">{config.beds} Beds</span>
-                          </label>
-                          <input type="range" min="30" max="500" step="5" value={config.beds} onChange={e=>setConfig({...config, beds: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
+                  <div className={GLOW_CARD}>
+                    <div className="mb-6">
+                      <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest">
+                        <span>Project Scale</span><span className="text-white">{config.beds} Beds</span>
+                      </label>
+                      <input type="range" min="30" max="500" step="5" value={config.beds} onChange={e=>setConfig({...config, beds: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
+                    </div>
+                    
+                    <div className="mb-6">
+                      <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest">
+                        <span>Stabilized Occupancy</span><span className="text-white">{config.occupancyRate}%</span>
+                      </label>
+                      <input type="range" min="40" max="100" step="5" value={config.occupancyRate} onChange={e=>setConfig({...config, occupancyRate: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
+                    </div>
+                    
+                    <div className="mb-6">
+                      <label className={`text-[10px] font-black flex justify-between mb-3 uppercase tracking-widest transition-colors duration-300 ${engine.nabhReady ? 'text-[#D4AF37]' : 'text-red-500'}`}>
+                        <span>Total Area</span>
+                        <span className={engine.nabhReady ? 'text-white' : 'text-red-400'}>
+                          {config.areaSqFt.toLocaleString()} Sqft
+                        </span>
+                      </label>
+                      
+                      <input 
+                        type="range" min="20000" max="400000" step="5000" 
+                        value={config.areaSqFt} 
+                        onChange={e=>setConfig({...config, areaSqFt: Number(e.target.value)})} 
+                        className={`w-full transition-colors duration-300 ${engine.nabhReady ? 'accent-[#D4AF37]' : 'accent-red-500'}`} 
+                      />
+                      
+                      {!engine.nabhReady && (
+                        <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-in fade-in duration-300">
+                           <p className="text-[10px] text-red-500 font-black uppercase tracking-widest mb-1 flex items-center gap-1">
+                             <AlertCircle size={12}/> NABH 6th Ed. Space Deficit
+                           </p>
+                           <p className="text-[11px] text-red-200/80 leading-relaxed">
+                             Current area provides <strong className="text-white">{Math.round(engine.sqFtPerBed)} sq.ft/bed</strong>. The new NABH 6th Edition (Jan 2025) requires ~<strong className="text-white">{Math.round(engine.minAreaPerBed)} sq.ft/bed</strong> for a {engine.type} setup. Increase total area by <strong className="text-white">{Math.round(engine.areaShortfall).toLocaleString()} sq.ft</strong> or reduce your bed count to comply.
+                           </p>
                         </div>
-                        
-                        {/* 2. Occupancy Slider */}
-                        <div className="mb-6">
-                          <label className="text-[10px] text-[#D4AF37] font-black flex justify-between mb-3 uppercase tracking-widest">
-                            <span>Stabilized Occupancy</span><span className="text-white">{config.occupancyRate}%</span>
-                          </label>
-                          <input type="range" min="40" max="100" step="5" value={config.occupancyRate} onChange={e=>setConfig({...config, occupancyRate: Number(e.target.value)})} className="w-full accent-[#D4AF37]" />
-                        </div>
-                        
-                        {/* 3. Total Area Slider (WITH DYNAMIC RED LOGIC) */}
-                        <div className="mb-6">
-                          <label className={`text-[10px] font-black flex justify-between mb-3 uppercase tracking-widest transition-colors duration-300 ${engine.nabhReady ? 'text-[#D4AF37]' : 'text-red-500'}`}>
-                            <span>Total Area</span>
-                            <span className={engine.nabhReady ? 'text-white' : 'text-red-400'}>
-                              {config.areaSqFt.toLocaleString()} Sqft
-                            </span>
-                          </label>
-                          
-                          <input 
-                            type="range" 
-                            min="20000" 
-                            max="400000" 
-                            step="5000" 
-                            value={config.areaSqFt} 
-                            onChange={e=>setConfig({...config, areaSqFt: Number(e.target.value)})} 
-                            className={`w-full transition-colors duration-300 ${engine.nabhReady ? 'accent-[#D4AF37]' : 'accent-red-500'}`} 
-                          />
-                          
-                          {/* 🔥 NABH 6TH EDITION COMPLIANCE ALERT */}
-                          {!engine.nabhReady && (
-                            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-in fade-in duration-300">
-                               <p className="text-[10px] text-red-500 font-black uppercase tracking-widest mb-1 flex items-center gap-1">
-                                 <AlertCircle size={12}/> NABH 6th Ed. Space Deficit
-                               </p>
-                               <p className="text-[11px] text-red-200/80 leading-relaxed">
-                                 Current area provides <strong className="text-white">{Math.round(engine.sqFtPerBed)} sq.ft/bed</strong>. The new NABH 6th Edition (Jan 2025) requires ~<strong className="text-white">{Math.round(engine.minAreaPerBed)} sq.ft/bed</strong> for a {engine.type} setup. Increase total area by <strong className="text-white">{Math.round(engine.areaShortfall).toLocaleString()} sq.ft</strong> or reduce your bed count to comply.
-                               </p>
-                            </div>
-                          )}
-                        </div>
+                      )}
+                    </div>
 
-                        {/* City Tier Dropdown */}
-                        <div className="mb-6">
-                          <label className="text-[10px] text-[#D4AF37] font-black block mb-3 uppercase tracking-widest">City Tier Strategy</label>
-                          <select value={config.cityTier} onChange={e=>setConfig({...config, cityTier: Number(e.target.value)})} className="w-full bg-[#010810] border border-[#D4AF37]/30 p-4 rounded-xl text-sm font-bold text-white outline-none">
-                            <option value={1}>Tier 1 (Metro)</option>
-                            <option value={2}>Tier 2 (Smart City)</option>
-                          </select>
-                        </div>
-
-                      </div>
+                    <div className="mb-6">
+                      <label className="text-[10px] text-[#D4AF37] font-black block mb-3 uppercase tracking-widest">City Tier Strategy</label>
+                      <select value={config.cityTier} onChange={e=>setConfig({...config, cityTier: Number(e.target.value)})} className="w-full bg-[#010810] border border-[#D4AF37]/30 p-4 rounded-xl text-sm font-bold text-white outline-none">
+                        <option value={1}>Tier 1 (Metro)</option>
+                        <option value={2}>Tier 2 (Smart City)</option>
+                      </select>
+                    </div>
                   </div>
 
-                  {/* RIGHT COLUMN: 4-Card Grid */}
                   <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                    
-                    {/* Card 1: EBITDA */}
                     <div className={GLOW_CARD}>
                       <TrendingUp className="w-6 h-6 md:w-8 md:h-8 text-white/10 mb-4 absolute right-8 top-8" />
                       <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-2">Projected Annual EBITDA</p>
@@ -521,7 +426,6 @@ const runAIAnalysis = async () => {
                       <p className="text-[10px] text-[#4ade80] font-bold mt-4 border border-[#4ade80]/30 bg-[#4ade80]/10 inline-block px-3 py-1 rounded-md uppercase tracking-widest">{safeToFixed(engine.ebitdaMargin, 1)}% Margin</p>
                     </div>
                     
-                    {/* Card 2: DSCR / Bankability */}
                     <div className={GLOW_CARD}>
                       <PieChart className="w-6 h-6 md:w-8 md:h-8 text-white/10 mb-4 absolute right-8 top-8" />
                       <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-2">Stabilized Bankability</p>
@@ -529,7 +433,6 @@ const runAIAnalysis = async () => {
                       <p className="text-xs text-white/50 font-medium mt-4">{safeToFixed(engine.breakEvenYears, 1)} Yrs Break-Even</p>
                     </div>
                     
-                    {/* Card 3: TOTAL MANPOWER PLANNING (FTE) */}
                     <div className={GLOW_CARD}>
                       <Users className="w-5 h-5 md:w-6 md:h-6 text-[#D4AF37] mb-5" />
                       <div className="flex justify-between items-end mb-5">
@@ -546,16 +449,15 @@ const runAIAnalysis = async () => {
                            <span className="text-sm font-black text-[#4ade80]">{engine.paramedical}</span>
                         </div>
                         <div className="flex justify-between items-center bg-[#010810] p-3 rounded-lg border border-white/5">
-                           <span className="text-xs font-bold text-white/80">Admin & Support (FMS, IMS)</span>
+                           <span className="text-xs font-bold text-white/80">Admin & Support</span>
                            <span className="text-sm font-black text-[#D4AF37]">{engine.adminSupport}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Card 4: SPATIAL ZONING & IPC BLOCK */}
                     <div className={GLOW_CARD}>
                       <Layers className="w-5 h-5 md:w-6 md:h-6 text-[#D4AF37] mb-6" />
-                      <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-6">NABH 6th Ed. Spatial Zoning</p>
+                      <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-6">NABH Spatial Zoning</p>
                       <p className="flex justify-between font-bold border-b border-white/5 pb-3 mb-3 text-sm md:text-base">
                         <span>Sterile (IPC / OT / ICU)</span>
                         <span className="text-white text-xl">{engine.icuOtArea.toLocaleString()}</span>
@@ -565,11 +467,9 @@ const runAIAnalysis = async () => {
                         <span className="text-white text-xl">{engine.ipdArea.toLocaleString()}</span>
                       </p>
                     </div>
-
                   </div>
                 </div>
 
-                {/* COST OF DELAY / PAIN FOMO CARD */}
                 <div className="bg-gradient-to-r from-red-500/10 via-amber-500/5 to-[#051626] border border-red-500/30 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-[0_0_30px_rgba(239,68,68,0.1)] mt-8">
                   <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                     <div className="flex-1">
@@ -605,14 +505,12 @@ const runAIAnalysis = async () => {
                     </div>
                   </div>
                 </div>
-                
               </div>
             )}
-{/* TAB 2: AI ARCHITECT */}
+
+            {/* TAB 2: AI ARCHITECT */}
             {activeTab === "architect" && (
               <div className="space-y-12 animate-in fade-in duration-500">
-                
-                {/* --- TOP SECTION: AI PLANNING ENGINE FORM --- */}
                 <div className="bg-[#0A2540]/40 border border-[#D4AF37]/20 p-6 md:p-8 rounded-2xl md:rounded-[30px] shadow-xl">
                   <div className="flex items-center gap-4 mb-2">
                     <Cpu className="w-8 h-8 text-[#D4AF37]" />
@@ -667,18 +565,13 @@ const runAIAnalysis = async () => {
                   </div>
                 </div>
 
-                {/* --- BOTTOM SECTION: ASYMMETRIC BENTO BOX LAYOUT --- */}
                 <div className="space-y-6">
-                  
-                  {/* Header */}
                   <div className="mb-8 border-b border-white/10 pb-6">
                     <h3 className="text-3xl font-black text-white uppercase tracking-tighter mb-2">Verified <span className="text-[#D4AF37]">AI Outputs</span></h3>
                     <p className="text-white/60 text-sm">AI-generated deliverables aligned with NABH standards, ready for execution and approvals.</p>
                   </div>
 
                   <div className="flex flex-col gap-6">
-                    
-                    {/* 🟦 Top Row: Massive Full-Width Zoning Card (Blue) */}
                     <div className="bg-[#051626] border border-blue-500/20 p-6 md:p-8 rounded-[30px] hover:border-blue-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(59,130,246,0.05)] flex flex-col lg:flex-row gap-8">
                       <div className="flex-1 flex flex-col">
                         <div className="flex items-center gap-4 mb-4">
@@ -702,30 +595,22 @@ const runAIAnalysis = async () => {
                           <button className="px-6 py-3 bg-[#0A2540] text-white hover:bg-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition border border-white/5">Export PDF</button>
                         </div>
                       </div>
-                      
-                      {/* Image Injection: Blue Zoning */}
                       <div className="lg:w-[55%] min-h-[250px] bg-[#010810] rounded-2xl border border-white/10 overflow-hidden relative flex items-center justify-center group/img">
-                         <img src="/zoning-blue.jpg" alt="Zoning Diagram" className="w-full h-full object-cover opacity-80 group-hover/img:opacity-100 transition-opacity duration-300" />
+                         <img src="/images/design-bg.jpg" alt="Zoning Diagram" className="w-full h-full object-cover opacity-80 group-hover/img:opacity-100 transition-opacity duration-300" />
                          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-transparent group-hover/img:opacity-0 transition-opacity"></div>
                       </div>
                     </div>
 
-                    {/* 🟩 & 🟨 Bottom Row: 50/50 Split Grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                      
-                      {/* Card B: Department Layouts (Green) */}
                       <div className="bg-[#051626] border border-emerald-500/20 p-6 md:p-8 rounded-[30px] hover:border-emerald-500/60 transition-all duration-300 group shadow-[0_0_15px_rgba(16,185,129,0.05)] flex flex-col">
                         <div className="flex items-center gap-4 mb-4">
                           <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><Grid className="text-emerald-400 w-6 h-6"/></div>
                           <h4 className="text-lg font-black text-white uppercase tracking-widest group-hover:text-emerald-400 transition-colors">Department & <br/>Room Layouts</h4>
                         </div>
                         <p className="text-xs text-white/50 mb-6 leading-relaxed">Detailed layouts with optimized room sizes and adjacency logic.</p>
-                        
-                        {/* Image Injection: Green Layout */}
                         <div className="w-full h-32 bg-[#010810] rounded-xl border border-white/10 mb-6 flex items-center justify-center overflow-hidden">
-                           <img src="/layout-green.jpg" alt="Room Layouts" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                           <img src="/images/start-bg.jpg" alt="Room Layouts" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                         </div>
-
                         <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-3">Key Inclusions</p>
                         <ul className="space-y-3 mb-8 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-3">
                           <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> OPD, ICU, OT Plans</li>
@@ -733,26 +618,21 @@ const runAIAnalysis = async () => {
                           <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> Equip. Ready Blocks</li>
                           <li className="text-[10px] text-white/70 font-bold flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-emerald-400 mt-1 shrink-0"></div> Staff circulation</li>
                         </ul>
-                        
                         <div className="flex flex-col sm:flex-row gap-3 mt-auto">
                           <button className="flex-1 py-3 bg-[#D4AF37] text-black rounded-lg text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform">Explore Layouts</button>
                           <button className="flex-1 py-3 bg-[#0A2540] border border-white/5 text-white/50 hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition">Export CAD/PDF</button>
                         </div>
                       </div>
 
-                      {/* Card C: Space Reports (Gold) */}
                       <div className="bg-[#051626] border border-[#D4AF37]/20 p-6 md:p-8 rounded-[30px] hover:border-[#D4AF37]/60 transition-all duration-300 group shadow-[0_0_15px_rgba(212,175,55,0.05)] flex flex-col">
                         <div className="flex items-center gap-4 mb-4">
                           <div className="w-12 h-12 bg-[#D4AF37]/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"><FileText className="text-[#D4AF37] w-6 h-6"/></div>
                           <h4 className="text-lg font-black text-white uppercase tracking-widest group-hover:text-[#D4AF37] transition-colors">Space Reports & <br/>DPR Data</h4>
                         </div>
                         <p className="text-xs text-white/50 mb-6 leading-relaxed">Comprehensive data tables for planning, budgeting, and bank approvals.</p>
-                        
-                        {/* Image Injection: Gold Report */}
                         <div className="w-full h-32 bg-[#010810] rounded-xl border border-white/10 mb-6 flex items-center justify-center overflow-hidden">
-                           <img src="/report-gold.jpg" alt="Space Reports" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                           <img src="/images/consultant-bg.jpg" alt="Space Reports" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                         </div>
-
                         <p className="text-[10px] text-[#D4AF37] font-black uppercase tracking-widest mb-3">Key Inclusions</p>
                         <ul className="space-y-3 mb-8 flex-1">
                           <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> Dept. wise area statements</li>
@@ -760,17 +640,14 @@ const runAIAnalysis = async () => {
                           <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> Cost estimation inputs</li>
                           <li className="text-[10px] text-white/70 font-bold flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-sm bg-[#D4AF37]"></div> NABH compliance checklist</li>
                         </ul>
-                        
                         <div className="flex flex-col sm:flex-row gap-3 mt-auto">
                           <button className="flex-1 py-3 bg-[#D4AF37] text-black rounded-lg text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-transform">View Reports</button>
                           <button className="flex-1 py-3 bg-[#8B6508] border border-[#D4AF37]/50 text-white rounded-lg text-[10px] font-bold uppercase tracking-widest transition hover:bg-[#D4AF37] hover:text-black">Get Approved Plans</button>
                         </div>
                       </div>
-
                     </div>
                   </div>
 
-                  {/* Trust Badge & Features Strip & CTA */}
                   <div className="bg-gradient-to-r from-amber-500/20 to-[#0A2540] border border-amber-500/40 p-6 md:p-8 rounded-2xl flex flex-col md:flex-row items-center gap-6 shadow-xl relative overflow-hidden mt-8">
                     <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center shrink-0 border border-amber-500/30">
                       <ShieldCheck className="w-8 h-8 text-amber-400" />
@@ -802,15 +679,21 @@ const runAIAnalysis = async () => {
                        <button onClick={() => setActiveTab('contact')} className="w-full sm:w-auto px-8 py-4 bg-transparent text-[#D4AF37] hover:underline font-black text-xs uppercase tracking-widest transition-colors">Consult Expert</button>
                      </div>
                   </div>
-
                 </div>
               </div>
             )}
+
             {/* TAB 3: SMART BOQ (FULLY FILTERABLE) */}
             {activeTab === "boq" && (
               <div className="space-y-8 animate-in fade-in duration-500">
-                
-                {/* Top Metrics Grid */}
+                <div className="relative w-full h-[250px] rounded-[40px] overflow-hidden border border-emerald-500/20 shadow-2xl">
+                    <img src="/images/equipment-bg.jpg" className="absolute inset-0 w-full h-full object-cover" alt="Equipment BOQ" />
+                    <div className="absolute inset-0 bg-black/60 flex flex-col justify-center px-12">
+                        <h2 className="text-4xl font-black text-white uppercase tracking-tighter">Equipment <span className="text-emerald-400">BOQ</span></h2>
+                        <p className="max-w-lg text-white/60 text-sm mt-2">Comprehensive procurement list calculated specifically for {config.beds} beds.</p>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-[#0A2540]/60 border border-white/5 p-6 rounded-2xl md:rounded-[30px] flex flex-col justify-center shadow-xl">
                     <p className="text-[10px] text-white/50 uppercase font-black tracking-widest mb-2">Total BOQ Value</p>
@@ -829,7 +712,6 @@ const runAIAnalysis = async () => {
                   </div>
                 </div>
                 
-                {/* DYNAMIC FILTER TABS */}
                 <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
                   <button 
                     onClick={() => setActiveBoqCategory("all")}
@@ -848,7 +730,6 @@ const runAIAnalysis = async () => {
                   ))}
                 </div>
 
-                {/* FILTERED CATEGORY LIST */}
                 <div className="space-y-6">
                   {boqData.categories
                     .filter(cat => activeBoqCategory === "all" || cat.id === activeBoqCategory)
@@ -910,7 +791,17 @@ const runAIAnalysis = async () => {
                    </div>
                 </div>
                 
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Left Col: Simulator */}
+                  <div className="bg-[#051626] border border-[#D4AF37]/30 rounded-[40px] p-10 shadow-2xl relative overflow-hidden">
+                      <img src="/images/cost-bg.jpg" className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" alt="ROI Analysis" />
+                      <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-8 flex items-center gap-3"><Activity className="text-[#D4AF37]"/> ROI Simulator</h3>
+                      <div className="space-y-10 relative z-10">
+                          <div><div className="flex justify-between mb-4"><span className="text-[10px] text-white/50 uppercase font-black">Occupancy Ramp</span><span className="text-[#D4AF37] font-black">{sim.occ}%</span></div><input type="range" min="30" max="90" step="5" value={sim.occ} onChange={e=>setSim({...sim, occ: Number(e.target.value)})} className="w-full accent-[#D4AF37]" /></div>
+                          <div><div className="flex justify-between mb-4"><span className="text-[10px] text-white/50 uppercase font-black">Pricing (ARPOB)</span><span className="text-[#D4AF37] font-black">₹{sim.arpoB.toLocaleString()}</span></div><input type="range" min="8000" max="30000" step="1000" value={sim.arpoB} onChange={e=>setSim({...sim, arpoB: Number(e.target.value)})} className="w-full accent-[#D4AF37]" /></div>
+                          <div><div className="flex justify-between mb-4"><span className="text-[10px] text-white/50 uppercase font-black">Promoter Equity</span><span className="text-[#D4AF37] font-black">{sim.equity}%</span></div><input type="range" min="20" max="100" step="5" value={sim.equity} onChange={e=>setSim({...sim, equity: Number(e.target.value)})} className="w-full accent-[#D4AF37]" /></div>
+                      </div>
+                  </div>
 
                   {/* Right Col: Outputs */}
                   <div className="lg:col-span-2 flex flex-col gap-6">
@@ -946,7 +837,8 @@ const runAIAnalysis = async () => {
                 </div>
               </div>
             )}
-{/* TAB 5: NABH COMPLIANCE (NABH 6TH ED ENHANCED) */}
+
+            {/* TAB 5: NABH COMPLIANCE (NABH 6TH ED ENHANCED) */}
             {activeTab === "compliance" && (
               <div className="space-y-8 animate-in fade-in duration-500">
                 
@@ -1043,7 +935,21 @@ const runAIAnalysis = async () => {
                    </div>
                 </div>
 
-                {/* Existing Approvals Block - Condensed to fit cleanly */}
+                <div className="bg-[#051626] border border-[#D4AF37]/40 p-12 rounded-[50px] flex flex-col md:flex-row items-center gap-16 shadow-2xl relative overflow-hidden">
+                    <img src="/images/nabh-bg.jpg" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" alt="NABH Seal" />
+                    <div className="w-64 h-64 bg-white/5 rounded-full flex items-center justify-center border border-[#D4AF37]/30 shadow-[0_0_80px_rgba(212,175,55,0.1)] shrink-0 relative z-10">
+                        <ShieldCheck size={100} className="text-[#D4AF37] opacity-80" />
+                    </div>
+                    <div className="flex-1 relative z-10 text-center md:text-left">
+                        <h3 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6">Accreditation <span className="text-[#D4AF37]">Ready</span></h3>
+                        <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-8">AI planning logic pre-certified for NABH 6th Edition (Jan 2025). We architect medical ecosystems that pass audits on day one.</p>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                            <div className="bg-black/40 px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase text-emerald-400 flex items-center gap-2"><CheckCircle2 size={14}/> Fire Safety NOC</div>
+                            <div className="bg-black/40 px-6 py-2 rounded-full border border-white/10 text-[10px] font-black uppercase text-emerald-400 flex items-center gap-2"><CheckCircle2 size={14}/> GPCB Authorization</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="bg-[#0A2540]/20 border border-white/5 p-6 rounded-[20px]">
                     <h4 className="text-sm font-black text-white/70 uppercase tracking-widest mb-4">Mandatory Department Approvals</h4>
@@ -1066,7 +972,8 @@ const runAIAnalysis = async () => {
                 </div>
               </div>
             )}
-            {/* 🔥 TAB 6: FUNDING (FULLY RESTORED) */}
+
+            {/* 🔥 TAB 6: FUNDING */}
             {activeTab === "funding" && (
               <div className="space-y-8 md:space-y-10 animate-in fade-in duration-700">
                  <div className={`${GLOW_CARD} !p-8 bg-gradient-to-br from-[#0A2540] to-[#051626] border border-[#D4AF37]/50 flex flex-col md:flex-row items-center justify-between gap-6`}>
@@ -1124,7 +1031,6 @@ const runAIAnalysis = async () => {
             )}
 
             {/* TAB 7: DPR CHECKOUT */}
-           {/* TAB 7: DPR CHECKOUT */}
             {activeTab === "dpr" && (
               <div className="space-y-12 animate-in slide-in-from-bottom duration-700">
                  
@@ -1137,7 +1043,7 @@ const runAIAnalysis = async () => {
                   <p className="text-white/60 font-bold uppercase tracking-widest text-sm">Join {fomo.activeUsers} promoters currently securing DPR reports</p>
                  </div>
                  
-                 {/* HIGH-CONVERTING PRICING TIERS (STEP 3 INTEGRATED) */}
+                 {/* HIGH-CONVERTING PRICING TIERS */}
                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4 max-w-7xl mx-auto mt-8">
                     {PACKAGES.map(pkg => {
                       const isSelected = pricingState.packageId === pkg.id;
@@ -1217,7 +1123,6 @@ const runAIAnalysis = async () => {
                       <div className="pt-8 mt-8 border-t-2 border-dashed border-gray-200 flex justify-between items-end">
                          <span className="text-gray-400 font-bold uppercase tracking-widest text-xs">Total Due</span>
                          <div className="text-right">
-                           {/* Using the updated totalAmountDue logic here */}
                            {totalAmountDue < activePackage.basePrice && (
                              <p className="text-[10px] md:text-xs text-red-500 line-through mb-1">
                                ₹{(activePackage.basePrice + selectedAddOns.reduce((t, id) => t + (ADD_ONS_LIST.find(a => a.id === id)?.price || 0), 0)).toLocaleString('en-IN')}
@@ -1235,6 +1140,7 @@ const runAIAnalysis = async () => {
                  </div>
               </div>
             )}
+
             {/* TAB 8: VENDORS */}
             {activeTab === "vendors" && (
               <div className="space-y-8 animate-in slide-in-from-bottom duration-700">
@@ -1312,45 +1218,16 @@ const runAIAnalysis = async () => {
 
           </div>
 
-          <footer className="bg-[#030b14] border-t border-white/5 py-10 px-6 md:px-10 shrink-0 z-50 text-center md:text-left mt-auto">
-            <div className="max-w-[1200px] mx-auto mb-8 border-b border-white/5 pb-8 flex flex-col md:flex-row justify-center gap-6 text-[10px] font-bold text-white/40 uppercase tracking-widest">
-               <span>100 Bed Hospital Cost India</span><span>200 Bed Hospital Project Cost</span><span>Hospital DPR Report India</span><span>NABH Hospital Guidelines</span><span>Hospital Consultant Surat</span><span>Hospital Consultant Mumbai</span>
-            </div>
-            <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <footer className="mt-20 py-16 border-t border-white/5 bg-[#030b14]/50 rounded-t-[50px] px-10 text-center md:text-left">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-[1200px] mx-auto">
               <div className="md:col-span-2">
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-                  <Building2 className="w-5 h-5 text-[#D4AF37]" />
-                  <a href="/" style={{ fontFamily: "'Montserrat', sans-serif" }} className="font-black text-lg tracking-widest uppercase text-white flex items-baseline">INNOVATE <span style={{ color: '#FBC02D', marginLeft: '4px' }}>INDAI</span></a>
-                </div>
-                <p className="text-xs text-white/40 leading-relaxed max-w-sm mx-auto md:mx-0">India's premier AI-powered Hospital Project Consultancy. We deliver end-to-end solutions from NABH compliant architecture to medical equipment BOQs and ₹100+ Crore project finance syndication.</p>
-                <p className="text-xs text-white/40 mt-4 leading-relaxed max-w-sm mx-auto md:mx-0"><strong className="text-white/60">HQ:</strong> 135, Soham Arcade, Nr. Bagban Circle, Gauravpath Road, Pal, Surat. 394510</p>
+                <div className="flex items-center gap-3 mb-6"><Building2 className="text-[#D4AF37]"/><span className="text-2xl font-black uppercase">INNOVATE <span className="text-[#FBC02D]">INDAI</span></span></div>
+                <p className="text-sm text-white/30 leading-relaxed max-w-sm">India's premier AI-powered Hospital Project Consultancy. We deliver end-to-end solutions from NABH compliant architecture to ₹100+ Crore project finance syndication.</p>
               </div>
-              <div>
-                <h4 className="text-white font-bold mb-4 text-sm">Solutions</h4>
-                <ul className="space-y-2 text-xs text-white/40">
-                  <li><button onClick={()=>{setActiveTab('dpr');window.scrollTo(0,0)}} className="hover:text-[#D4AF37]">DPR Generator</button></li>
-                  <li><button onClick={()=>{setActiveTab('funding');window.scrollTo(0,0)}} className="hover:text-[#D4AF37]">Hospital Loan Syndication</button></li>
-                  <li><button onClick={()=>{setActiveTab('vendors');window.scrollTo(0,0)}} className="hover:text-[#D4AF37]">Medical Equipment Procurement</button></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-white font-bold mb-4 text-sm">Corporate</h4>
-                <ul className="space-y-2 text-xs text-white/40">
-                  <li><button onClick={()=>{setActiveTab('contact');window.scrollTo(0,0)}} className="hover:text-[#D4AF37]">Contact Us</button></li>
-                  <li><a href="#" className="hover:text-[#D4AF37]">Privacy Policy</a></li>
-                  <li><a href="#" className="hover:text-[#D4AF37]">About Us</a></li>
-                </ul>
-              </div>
+              <div><h4 className="text-white font-black text-xs uppercase mb-6">Systems</h4><ul className="space-y-3 text-xs text-white/30"><li>DPR Generator</li><li>Loan Syndication</li></ul></div>
+              <div><h4 className="text-white font-black text-xs uppercase mb-6">Accreditations</h4><ul className="space-y-3 text-xs text-white/30"><li>NABH 6th Edition</li><li>AERB Radiology</li></ul></div>
             </div>
-            <div className="border-t border-white/5 pt-6 max-w-[1200px] mx-auto">
-              <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mb-3">Serving Hospitals Across Gujarat</p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-x-3 gap-y-2 text-[10px] text-white/20">
-                {GUJARAT_CITIES.map((city, idx) => (<span key={idx} className="hover:text-[#D4AF37] cursor-pointer transition-colors">{city}</span>))}
-              </div>
-            </div>
-            <div className="mt-8 text-center text-[10px] text-white/30">
-              &copy; {new Date().getFullYear()} Innovate IndAI Hospital Project Consultancy. All rights reserved.
-            </div>
+            <div className="mt-16 text-center text-[10px] text-white/20 font-bold uppercase tracking-widest">© 2026 Innovate IndAI Hospital Project Consultancy. All rights reserved.</div>
           </footer>
         </main>
       </div>
